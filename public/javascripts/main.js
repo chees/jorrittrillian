@@ -2,6 +2,7 @@ var $output = $('[data-role="output"]');
 
 function output(msg) {
   $output.append(msg + '<br>');
+  $output.scrollTop($output[0].scrollHeight);
 }
 function sys(msg) {
   output('<span class="sys">' + msg + '</span>');
