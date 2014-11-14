@@ -23,9 +23,8 @@ public class Player {
   }
 
   public void setName(String name) {
-    this.name = name
-        .replaceAll("[^a-zA-Z]", "")
-        .substring(0, Math.min(16, name.length()));
+    this.name = name.replaceAll("[^a-zA-Z]", "");
+    this.name = this.name.substring(0, Math.min(16, this.name.length()));
     // Capitalize:
     if (this.name.length() > 0)
       this.name = this.name.substring(0, 1).toUpperCase() + this.name.substring(1);
