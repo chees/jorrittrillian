@@ -5,7 +5,6 @@ import game.Player.State;
 import java.util.HashMap;
 import java.util.Map;
 
-import play.Logger;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 
@@ -36,14 +35,14 @@ public class Game extends UntypedActor {
   private void handleCommand(String cmd, Player p) {
     if (p.state == State.WAITING_FOR_NAME) {
       p.setName(cmd);
-      if (p.getName().length() > 1) {
+      if (p.getName().length() > 0) {
         p.state = State.STANDING;
         p.send("Hi " + p.getName() + " :)");
       } else {
         p.send("Try typing a name...");
       }
     } else {
-      Logger.warn("Unhandled command: " + cmd);
+      p.send("Huh?");
     }
   }
   
