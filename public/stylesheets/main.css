@@ -9,7 +9,7 @@ body {
   justify-content: space-between;
   font-family: Helvetica;
 }
-h1 {
+h1, h2 {
   margin: 0;
 }
 .output {
@@ -34,4 +34,8 @@ h1 {
 }
 .in {
   color: green;
+}
+
+.room {
+  margin: 5px 0;
 }

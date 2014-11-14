@@ -1,27 +1,30 @@
 package game;
 
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 import game.Player.State;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 
-import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
-
 public class Game extends UntypedActor {
+  
   private Map<ActorRef, Player> players;
+  private List<Room> rooms;
   
   private Game() {
     players = new HashMap<>();
+    rooms = Loader.getRooms();
   }
   
   @Override
   public void onReceive(Object message) throws Exception {
     if (message instanceof NewConnectionMsg) {
       sendAllSys("New connection");
-      Player p = new Player(getSender());
+      Player p = new Player(getSender(), rooms.get(0));
       players.put(getSender(), p);
       p.send("What is your name?");
     } if (message instanceof DisconnectMsg) {
@@ -54,7 +57,8 @@ public class Game extends UntypedActor {
       sendAllBut(p.getName() + " chats: " + msg, p);
       p.send("You chat: " + msg);
     } else if ("look".startsWith(words[0])) {
-      p.send("You are in a room.");
+      Room r = p.getRoom();
+      p.send("<div class=\"room\"><h2>" + r.title + "</h2>" + r.description + "</div>");
     } else {
       p.send("Huh?");
     }

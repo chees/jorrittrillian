@@ -9,11 +9,13 @@ public class Player {
   
   private ActorRef connection;
   private String name;
-  State state;
-
+  private Room room;
   
-  public Player(ActorRef connection) {
+  State state;
+  
+  public Player(ActorRef connection, Room room) {
     this.connection = connection;
+    this.room = room;
     state = State.WAITING_FOR_NAME;
     name = "New player";
   }
@@ -32,5 +34,9 @@ public class Player {
   
   public String getName() {
     return name;
+  }
+
+  public Room getRoom() {
+    return room;
   }
 }

@@ -27,7 +27,6 @@ var input = $('[data-role="input"]');
 input.focus();
 input.closest('form').on('submit', function(e) {
   e.preventDefault();
-  
   output('<span class="in">' + htmlEncode(input.val()) + '</span>');
   ws.send(input.val());
   input.val('');
