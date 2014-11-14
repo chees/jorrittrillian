@@ -1,0 +1,33 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: Helvetica;
+}
+h1 {
+  margin: 0;
+}
+.output {
+  flex-grow: 1;
+}
+.input {
+  display: flex;
+  justify-content: space-between;
+}
+.input input {
+  font-size: 16px;
+}
+.input input[type="text"] {
+  flex-grow: 1;
+}
+
+.sys {
+  color: #888;
+}
+.in {
+  color: green;
+}

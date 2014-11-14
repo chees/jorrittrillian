@@ -20,7 +20,9 @@ public class Game extends UntypedActor {
   public void onReceive(Object message) throws Exception {
     if (message instanceof NewConnectionMsg) {
       sendAll("New connection");
-      players.put(getSender(), new Player(getSender()));
+      Player p = new Player(getSender());
+      players.put(getSender(), p);
+      p.send("What is your name?");
     } if (message instanceof DisconnectMsg) {
       Player p = players.remove(getSender());
       sendAll(p.getName() + " disconnected");
@@ -36,7 +38,7 @@ public class Game extends UntypedActor {
       p.setName(cmd);
       if (p.getName().length() > 1) {
         p.state = State.STANDING;
-        p.send("Welcome " + p.getName());
+        p.send("Hi " + p.getName() + " :)");
       } else {
         p.send("Try typing a name...");
       }

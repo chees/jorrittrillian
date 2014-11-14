@@ -1,20 +1,37 @@
+var $output = $('[data-role="output"]');
+
+function output(msg) {
+  $output.append(msg + '<br>');
+}
+function sys(msg) {
+  output('<span class="sys">' + msg + '</span>');
+}
+
 var ws = new WebSocket('ws://' + window.location.host + '/websocket');
 ws.onopen = function(e) {
-  console.log('Connected');
-  //ws.send('hi');
+  sys('Connected');
 };
 ws.onclose = function(e) {
-  console.log('Disconnected');
+  sys('Disconnected');
 };
 ws.onmessage = function(e) {
-  console.log('Message', e);
+  output(e.data);
 };
 ws.onerror = function(e) {
+  sys('Connection error');
   console.log('Error', e);
 }
 
-var nameEl = $('[data-role="name"]');
-nameEl.closest('form').on('submit', function(e) {
+var input = $('[data-role="input"]');
+input.focus();
+input.closest('form').on('submit', function(e) {
   e.preventDefault();
-  ws.send(nameEl.val());
+  
+  output('<span class="in">' + htmlEncode(input.val()) + '</span>');
+  ws.send(input.val());
+  input.val('');
 });
+
+function htmlEncode(value) {
+  return $('<div/>').text(value).html();
+}
