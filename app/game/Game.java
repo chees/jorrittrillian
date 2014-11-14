@@ -18,13 +18,13 @@ public class Game extends UntypedActor {
   @Override
   public void onReceive(Object message) throws Exception {
     if (message instanceof NewConnectionMsg) {
-      sendAll("New connection");
+      sendAllSys("New connection");
       Player p = new Player(getSender());
       players.put(getSender(), p);
       p.send("What is your name?");
     } if (message instanceof DisconnectMsg) {
       Player p = players.remove(getSender());
-      sendAll(p.getName() + " disconnected");
+      sendAllSys(p.getName() + " disconnected");
     } if (message instanceof String) {
       handleCommand((String)message, players.get(getSender()));
     } else {
@@ -50,6 +50,10 @@ public class Game extends UntypedActor {
     for (Player p : players.values()) {
       p.send(msg);
     }
+  }
+  
+  private void sendAllSys(String msg) {
+    sendAll("<span class=\"sys\">" + msg + "</span>");
   }
   
   public static class NewConnectionMsg {}
