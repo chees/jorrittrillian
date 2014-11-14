@@ -14,7 +14,7 @@ h1 {
 }
 .output {
   flex-grow: 1;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 .input {
   display: flex;
