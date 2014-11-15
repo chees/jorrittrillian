@@ -58,24 +58,38 @@ public class Game extends UntypedActor {
       String msg = escapeHtml4(cmd.substring(words[0].length(), cmd.length()));
       sendAllBut(p.getName() + " chats: " + msg, p);
       p.send("You chat: " + msg);
+    } else if ("down".startsWith(words[0])) {
+      move(p, "down", 5);
+    } else if ("east".startsWith(words[0])) {
+      move(p, "east", 1);
     } else if ("look".startsWith(words[0])) {
       Room r = p.room;
       p.send("<div class=\"room\"><h2>" + r.title + "</h2>" + r.description + "</div>");
     } else if ("north".startsWith(words[0])) {
-      Room origin = p.room;
-      if (origin.exits[0] == 0)
-        p.send("You can't go north here");
-      else {
-        origin.players.remove(p);
-        sendRoom(p.getName() + " leaves north", origin);
-        Room destination = rooms.get(origin.exits[0]);
-        sendRoom(p.getName() + " enters", destination);
-        p.room = destination;
-        destination.players.add(p);
-        handleCommand("look", p);
-      }
+      move(p, "north", 0);
+    } else if ("south".startsWith(words[0])) {
+      move(p, "south", 2);
+    } else if ("up".startsWith(words[0])) {
+      move(p, "up", 4);
+    } else if ("west".startsWith(words[0])) {
+      move(p, "west", 3);
     } else {
       p.send("Huh?");
+    }
+  }
+  
+  private void move(Player p, String direction, int exit) {
+    Room origin = p.room;
+    if (origin.exits[exit] == 0)
+      p.send("You can't go " + direction + " here");
+    else {
+      origin.players.remove(p);
+      sendRoom(p.getName() + " leaves " + direction, origin);
+      Room destination = rooms.get(origin.exits[exit]);
+      sendRoom(p.getName() + " enters", destination);
+      p.room = destination;
+      destination.players.add(p);
+      handleCommand("look", p);
     }
   }
   
