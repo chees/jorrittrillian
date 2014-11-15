@@ -7,7 +7,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: Helvetica;
+  font-family: 'Open Sans', sans-serif;
 }
 h1, h2 {
   margin: 0;
@@ -24,6 +24,7 @@ h1, h2 {
 }
 .input input {
   font-size: 16px;
+  height: 20px;
 }
 .input input[type="text"] {
   flex-grow: 1;
@@ -31,11 +32,13 @@ h1, h2 {
 
 .sys {
   color: #aaa;
+  font-weight: 300;
 }
 .in {
   color: green;
 }
 
 .room {
-  margin: 5px 0;
+  background-color: #f6f6f6;
+  padding: 5px 0;
 }

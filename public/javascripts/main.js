@@ -1,7 +1,7 @@
 var $output = $('[data-role="output"]');
 
 function output(msg) {
-  $output.append(msg + '<br>');
+  $output.append(msg + (msg.match(/<\/div>/) ? '' : '<br>'));
   $output.scrollTop($output[0].scrollHeight);
 }
 function sys(msg) {
