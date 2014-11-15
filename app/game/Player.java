@@ -9,9 +9,9 @@ public class Player {
   
   private ActorRef connection;
   private String name;
-  private Room room;
   
   State state;
+  Room room;
   
   public Player(ActorRef connection, Room room) {
     this.connection = connection;
@@ -34,9 +34,5 @@ public class Player {
   
   public String getName() {
     return name;
-  }
-
-  public Room getRoom() {
-    return room;
   }
 }

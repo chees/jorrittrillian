@@ -4,7 +4,6 @@ import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 import game.Player.State;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import akka.actor.ActorRef;
@@ -13,7 +12,7 @@ import akka.actor.UntypedActor;
 public class Game extends UntypedActor {
   
   private Map<ActorRef, Player> players;
-  private List<Room> rooms;
+  private Map<Integer, Room> rooms;
   
   private Game() {
     players = new HashMap<>();
@@ -24,11 +23,14 @@ public class Game extends UntypedActor {
   public void onReceive(Object message) throws Exception {
     if (message instanceof NewConnectionMsg) {
       sendAllSys("New connection");
-      Player p = new Player(getSender(), rooms.get(0));
+      Room room = rooms.get(100);
+      Player p = new Player(getSender(), room);
       players.put(getSender(), p);
+      room.players.add(p);
       p.send("What is your name?");
     } if (message instanceof DisconnectMsg) {
       Player p = players.remove(getSender());
+      p.room.players.remove(p);
       sendAllSys(p.getName() + " disconnected");
     } if (message instanceof String) {
       String cmd = ((String) message).trim();
@@ -57,8 +59,21 @@ public class Game extends UntypedActor {
       sendAllBut(p.getName() + " chats: " + msg, p);
       p.send("You chat: " + msg);
     } else if ("look".startsWith(words[0])) {
-      Room r = p.getRoom();
+      Room r = p.room;
       p.send("<div class=\"room\"><h2>" + r.title + "</h2>" + r.description + "</div>");
+    } else if ("north".startsWith(words[0])) {
+      Room origin = p.room;
+      if (origin.exits[0] == 0)
+        p.send("You can't go north here");
+      else {
+        origin.players.remove(p);
+        sendRoom(p.getName() + " leaves north", origin);
+        Room destination = rooms.get(origin.exits[0]);
+        sendRoom(p.getName() + " enters", destination);
+        p.room = destination;
+        destination.players.add(p);
+        handleCommand("look", p);
+      }
     } else {
       p.send("Huh?");
     }
@@ -83,6 +98,12 @@ public class Game extends UntypedActor {
   
   private void sendAllButSys(String msg, Player excluded) {
     sendAllBut("<span class=\"sys\">" + msg + "</span>", excluded);
+  }
+  
+  private void sendRoom(String msg, Room room) {
+    for (Player p : room.players) {
+      p.send(msg);
+    }
   }
   
   private String getIntroduction() {
