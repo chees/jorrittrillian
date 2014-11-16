@@ -22,11 +22,12 @@ public class Room {
     players = new ArrayList<>();
   }
 
-  public String display() {
+  public String display(Player perspective) {
     return "<div class=\"room\">" +
         "<h2>" + title + "</h2>" +
         displayExits() +
-        description +
+        description + "<br>" +
+        displayPlayers(perspective) +
         "</div>";
   }
   
@@ -40,5 +41,13 @@ public class Room {
     if (exits[5] != 0) exitNames.add("down");
     if (exitNames.size() == 0) exitNames.add("none");
     return "[Exits: " + String.join(", ", exitNames) + "]<br>";
+  }
+  
+  private String displayPlayers(Player perspective) {
+    String output = "";
+    for (Player p : players)
+      if (p != perspective)
+        output += p.display();
+    return output;
   }
 }

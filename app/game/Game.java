@@ -63,7 +63,7 @@ public class Game extends UntypedActor {
     } else if ("east".startsWith(words[0])) {
       move(p, "east", 1);
     } else if ("look".startsWith(words[0])) {
-      p.send(p.room.display());
+      p.send(p.room.display(p));
     } else if ("north".startsWith(words[0])) {
       move(p, "north", 0);
     } else if ("south".startsWith(words[0])) {

@@ -35,4 +35,8 @@ public class Player {
   public String getName() {
     return name;
   }
+
+  public String display() {
+    return name + " is here<br>";
+  }
 }
