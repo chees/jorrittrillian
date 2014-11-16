@@ -11,6 +11,7 @@ public class Room {
   public final int[] exits; // n, e, s, w, u, d
   
   public List<Player> players;
+  public List<Mob> mobs;
 
   public Room(int id, String title, String description, int... exits) {
     this.id = id;
@@ -20,6 +21,7 @@ public class Room {
     if (exits.length != 6) throw new RuntimeException("Need exactly 6 exits");
     
     players = new ArrayList<>();
+    mobs = new ArrayList<>();
   }
 
   public String display(Player perspective) {

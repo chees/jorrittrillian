@@ -1,7 +1,12 @@
 package game;
 
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Loader {
   
@@ -29,6 +34,23 @@ public class Loader {
         "If you have anything to donate you can drop it in this room.",
          0, 0, 0, 0, 100, 0));
     return rooms;
+  }
+  
+  public static Map<Integer, Mob> getMobs() {
+    InputStream stream = Loader.class.getResourceAsStream("/areas/watchtower.json");
+    List<Mob> mobs;
+    try {
+      mobs = new ObjectMapper().readValue(stream, new TypeReference<List<Mob>>(){});
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    System.out.println(mobs);
+    
+    Map<Integer, Mob> result = new HashMap<>();
+    for (Mob m : mobs) {
+      result.put(m.id, m);
+    }
+    return result;
   }
   
   private static void addRoom(Map<Integer, Room> rooms, Room room) {

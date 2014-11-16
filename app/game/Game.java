@@ -13,10 +13,12 @@ public class Game extends UntypedActor {
   
   private Map<ActorRef, Player> players;
   private Map<Integer, Room> rooms;
+  private Map<Integer, Mob> mobs;
   
   private Game() {
     players = new HashMap<>();
     rooms = Loader.getRooms();
+    mobs = Loader.getMobs();
   }
   
   @Override
