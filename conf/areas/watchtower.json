@@ -46,5 +46,8 @@
   "mobs": [
     {"id": 100, "name": "Kylidra"},
     {"id": 101, "name": "A Scholar"}
+  ],
+  "respawns": [
+    {"mob": 100, "room": 100}
   ]
 }

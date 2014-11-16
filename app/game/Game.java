@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 import game.Player.State;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import akka.actor.ActorRef;
@@ -12,14 +13,17 @@ import akka.actor.UntypedActor;
 public class Game extends UntypedActor {
   
   private Map<ActorRef, Player> players;
+  private List<Area> areas;
   private Map<Integer, Room> rooms;
-  private Map<Integer, Mob> mobs;
+  //private Map<Integer, Mob> mobs;
   
   private Game() {
     players = new HashMap<>();
     Loader loader = new Loader();
+    areas = loader.getAreas();
     rooms = loader.getRooms();
-    mobs = loader.getMobs();
+    //mobs = loader.getMobs();
+    for (Area a : areas) a.respawn();
   }
   
   @Override

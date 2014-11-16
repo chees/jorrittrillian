@@ -19,10 +19,16 @@ public class Loader {
   private Area loadArea(String name) {
     InputStream stream = Loader.class.getResourceAsStream("/areas/" + name + ".json");    
     try {
-      return new ObjectMapper().readValue(stream, Area.class);
+      Area area = new ObjectMapper().readValue(stream, Area.class);
+      area.init();
+      return area;
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+  
+  public List<Area> getAreas() {
+    return areas;
   }
   
   public Map<Integer, Room> getRooms() {

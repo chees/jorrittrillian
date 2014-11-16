@@ -23,6 +23,7 @@ public class Room {
         "<h2>" + title + "</h2>" +
         displayExits() +
         description + "<br>" +
+        displayMobs() +
         displayPlayers(perspective) +
         "</div>";
   }
@@ -37,6 +38,13 @@ public class Room {
     if (exits[5] != 0) exitNames.add("down");
     if (exitNames.size() == 0) exitNames.add("none");
     return "[Exits: " + String.join(", ", exitNames) + "]<br>";
+  }
+  
+  private String displayMobs() {
+    String output = "";
+    for (Mob m : mobs)
+      output += m.display();
+    return output + "<br>";
   }
   
   private String displayPlayers(Player perspective) {
