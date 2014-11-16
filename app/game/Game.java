@@ -17,8 +17,9 @@ public class Game extends UntypedActor {
   
   private Game() {
     players = new HashMap<>();
-    rooms = Loader.getRooms();
-    mobs = Loader.getMobs();
+    Loader loader = new Loader();
+    rooms = loader.getRooms();
+    mobs = loader.getMobs();
   }
   
   @Override
