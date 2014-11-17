@@ -14,6 +14,7 @@ public class Loader {
   public Loader() {
     areas = new ArrayList<>();
     areas.add(loadArea("watchtower"));
+    areas.add(loadArea("drakwald"));
   }
   
   private Area loadArea(String name) {

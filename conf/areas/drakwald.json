@@ -1,0 +1,124 @@
+{
+  "rooms": [
+    {
+      "id": 200,
+      "title": "North Of The Watchtower",
+      "description": "You are just north of the watchtower. In all other directions lies the Drakwald forest.",
+      "exits": [0, 201, 101, 215, 0, 0]
+    },
+    {
+      "id": 201,
+      "title": "The Drakwald Forest",
+      "description": "In the southwest you can see the outline of the watchtower. East leads deeper into the forest.",
+      "exits": [0, 202, 0, 200, 0, 0]
+    },
+    {
+      "id": 202,
+      "title": "A Dark Corner Of The Forest",
+      "description": "The Drakwald Forest is getting thick here. The only ways are either south or west.",
+      "exits": [0, 0, 203, 201, 0, 0]
+    },
+    {
+      "id": 203,
+      "title": "The Drakwald Forest",
+      "description": "In the southwest you can see the outline of the watchtower. North leads deeper into the forest.",
+      "exits": [202, 0, 204, 0, 0, 0]
+    },
+    {
+      "id": 204,
+      "title": "East Of The Watchtower",
+      "description": "You are just east of the watchtower. In all other directions lies the Drakwald forest.",
+      "exits": [203, 0, 205, 102, 0, 0]
+    },
+    {
+      "id": 205,
+      "title": "The Drakwald Forest",
+      "description": "In the northwest you can see the outline of the watchtower. South leads deeper into the forest.",
+      "exits": [204, 0, 206, 0, 0, 0]
+    },
+    {
+      "id": 206,
+      "title": "An Old Cart",
+      "description": "An old cart is left here, but its wheels are all broken.",
+      "exits": [205, 0, 0, 207, 0, 0]
+    },
+    {
+      "id": 207,
+      "title": "The Drakwald Forest",
+      "description": "In the northwest you can see the outline of the watchtower. East leads deeper into the forest.",
+      "exits": [0, 206, 0, 208, 0, 0]
+    },
+    {
+      "id": 208,
+      "title": "South Of The Watchtower",
+      "description": "You are just south of the watchtower. In all other directions lies the Drakwald forest.",
+      "exits": [103, 207, 0, 209, 0, 0]
+    },
+    {
+      "id": 209,
+      "title": "The Drakwald Forest",
+      "description": "In the northeast you can see the outline of the watchtower. West leads to a clearing in the forest.",
+      "exits": [0, 208, 0, 210, 0, 0]
+    },
+    {
+      "id": 210,
+      "title": "A Little Pond",
+      "description": "There's a clearing in the forest here with a little pond.",
+      "exits": [211, 209, 0, 0, 0, 0]
+    },
+    {
+      "id": 211,
+      "title": "The Drakwald Forest",
+      "description": "In the northeast you can see the outline of the watchtower. South leads to a clearing in the forest.",
+      "exits": [212, 0, 210, 0, 0, 0]
+    },
+    {
+      "id": 212,
+      "title": "West Of The Watchtower",
+      "description": "You are just west of the watchtower. In all other directions lies the Drakwald Forest.",
+      "exits": [213, 104, 211, 0, 0, 0]
+    },
+    {
+      "id": 213,
+      "title": "The Drakwald Forest",
+      "description": "In the southeast you can see the outline of the watchtower. North leads deeper into the forest.",
+      "exits": [214, 0, 212, 0, 0, 0]
+    },
+    {
+      "id": 214,
+      "title": "More Trees",
+      "description": "There seem to be just more trees everywhere. You can go either east or south.",
+      "exits": [0, 215, 213, 0, 0, 0]
+    },
+    {
+      "id": 215,
+      "title": "The Drakwald Forest",
+      "description": "In the southeast you can see the outline of the watchtower. West leads deeper into the forest.",
+      "exits": [0, 200, 0, 214, 0, 0]
+    }
+  ],
+  "mobs": [
+    {"id": 200, "name": "A Beaver"},
+    {"id": 201, "name": "A Squirrel"},
+    {"id": 202, "name": "A Doe"},
+    {"id": 203, "name": "A Mouse"}
+  ],
+  "respawns": [
+    {"mob": 200, "room": 200},
+    {"mob": 201, "room": 201},
+    {"mob": 202, "room": 202},
+    {"mob": 203, "room": 203},
+    {"mob": 200, "room": 204},
+    {"mob": 201, "room": 205},
+    {"mob": 202, "room": 206},
+    {"mob": 203, "room": 207},
+    {"mob": 200, "room": 208},
+    {"mob": 201, "room": 209},
+    {"mob": 202, "room": 210},
+    {"mob": 203, "room": 211},
+    {"mob": 200, "room": 212},
+    {"mob": 201, "room": 213},
+    {"mob": 202, "room": 214},
+    {"mob": 203, "room": 215}
+  ]
+}

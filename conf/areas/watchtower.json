@@ -10,25 +10,25 @@
       "id": 101,
       "title": "The Northern Archway",
       "description": "The walls of the archway are made of an extremely smooth kind of stone. While you're examining it, you see a black substance inside, moving slightly, as if it knows you are watching.",
-      "exits": [0, 0, 100, 0, 0, 0]
+      "exits": [200, 0, 100, 0, 0, 0]
     },
     {
       "id": 102,
       "title": "The Eastern Archway",
       "description": "The walls of the archway are made of an extremely smooth kind of stone. While you're examining it, you see a black substance inside, moving slightly, as if it knows you are watching.",
-      "exits": [0, 0, 0, 100, 0, 0]
+      "exits": [0, 204, 0, 100, 0, 0]
     },
     {
       "id": 103,
       "title": "The Southern Archway",
       "description": "The walls of the archway are made of an extremely smooth kind of stone. While you're examining it, you see a black substance inside, moving slightly, as if it knows you are watching.",
-      "exits": [100, 0, 0, 0, 0, 0]
+      "exits": [100, 0, 208, 0, 0, 0]
     },
     {
       "id": 104,
       "title": "The Western Archway",
       "description": "The walls of the archway are made of an extremely smooth kind of stone. While you're examining it, you see a black substance inside, moving slightly, as if it knows you are watching.",
-      "exits": [0, 100, 0, 0, 0, 0]
+      "exits": [0, 100, 0, 212, 0, 0]
     },
     {
       "id": 105,
@@ -39,15 +39,16 @@
     {
       "id": 106,
       "title": "The Donation Room",
-      "description": "If you have anything to donate you can drop it in this room.",
+      "description": "You have the feeling this is where you're supposed to donate things. Probably kind of pointless though.",
       "exits": [0, 0, 0, 0, 100, 0]
     }
   ],
   "mobs": [
     {"id": 100, "name": "Kylidra"},
-    {"id": 101, "name": "A Scholar"}
+    {"id": 101, "name": "A Random Scholar"}
   ],
   "respawns": [
-    {"mob": 100, "room": 100}
+    {"mob": 100, "room": 100},
+    {"mob": 101, "room": 106}
   ]
 }
