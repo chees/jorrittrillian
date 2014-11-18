@@ -1,7 +1,16 @@
 var $output = $('[data-role="output"]');
 
 function output(msg) {
+  var scrollLock = false;
+  if ($output[0].scrollTop + $output.height() < $output[0].scrollHeight) {
+    scrollLock = true;
+  }
   $output.append(msg + (msg.match(/<\/div>/) ? '' : '<br>'));
+  if (!scrollLock) {
+    scrollToEnd();
+  }
+}
+function scrollToEnd() {
   $output.scrollTop($output[0].scrollHeight);
 }
 function sys(msg) {
@@ -30,6 +39,7 @@ input.closest('form').on('submit', function(e) {
   output('<span class="in">' + htmlEncode(input.val()) + '</span>');
   ws.send(input.val());
   input.val('');
+  scrollToEnd();
 });
 
 function htmlEncode(value) {
