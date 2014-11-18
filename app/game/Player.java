@@ -3,14 +3,10 @@ package game;
 import actors.Connection;
 import akka.actor.ActorRef;
 
-public class Player {
-
-  enum State { WAITING_FOR_NAME, STANDING, FIGHTING }
+public class Player extends Character {
   
   private ActorRef connection;
-  private String name;
   
-  State state;
   Room room;
   
   public Player(ActorRef connection, Room room) {
@@ -18,6 +14,7 @@ public class Player {
     this.room = room;
     state = State.WAITING_FOR_NAME;
     name = "New player";
+    hp = 100;
   }
 
   public void send(String msg) {
@@ -34,9 +31,5 @@ public class Player {
   
   public String getName() {
     return name;
-  }
-
-  public String display() {
-    return name + " is here<br>";
   }
 }

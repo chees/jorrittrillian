@@ -98,10 +98,10 @@
     }
   ],
   "mobs": [
-    {"id": 200, "name": "A beaver", "keywords": ["beaver"]},
-    {"id": 201, "name": "A squirrel", "keywords": ["squirrel"]},
-    {"id": 202, "name": "A doe", "keywords": ["doe"]},
-    {"id": 203, "name": "A mouse", "keywords": ["mouse"]}
+    {"id": 200, "name": "A beaver", "keywords": ["beaver"], "hp": 5},
+    {"id": 201, "name": "A squirrel", "keywords": ["squirrel"], "hp": 4},
+    {"id": 202, "name": "A doe", "keywords": ["doe"], "hp": 6},
+    {"id": 203, "name": "A mouse", "keywords": ["mouse"], "hp": 3}
   ],
   "respawns": [
     {"mob": 200, "room": 200},

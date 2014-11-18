@@ -1,9 +1,9 @@
 package game;
 
 
-public class Mob {
+public class Mob extends Character {
+    
   public int id;
-  public String name;
   public String[] keywords;
 
   public Mob() {}
@@ -11,14 +11,16 @@ public class Mob {
     id = original.id;
     name = original.name;
     keywords = original.keywords;
-  }
-  
-  public String display() {
-    return name + " is here<br>";
+    hp = original.hp;
+    state = State.STANDING;
   }
   
   @Override
   public String toString() {
     return "Mob [id=" + id + ", name=" + name + "]";
+  }
+  
+  public void setName(String name) {
+    this.name = name;
   }
 }

@@ -1,7 +1,7 @@
 package game;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
-import game.Player.State;
+import game.Character.State;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +64,10 @@ public class Game extends UntypedActor {
     tick++;
     for (Player p : players.values()) {
       if (p.state == State.FIGHTING && tick % 5 == 0) {
-        p.send("hit");
+        p.hp--;
+        p.target.hp--;
+        p.send("You: " + p.hp + " " + p.target.name + ": " + p.target.hp);
+        sendRoomBut(p.name + ": " + p.hp + " " + p.target.name + ": " + p.target.hp, p.room, p);
       }
     }
   }
@@ -101,8 +104,11 @@ public class Game extends UntypedActor {
         return;
       }
       p.state = State.FIGHTING;
+      p.target = target;
+      target.state = State.FIGHTING;
+      target.target = p;
       p.send("You attack " + target.name + "!");
-      sendAllBut(p.getName() + " attacks " + target.name + "!", p);
+      sendRoomBut(p.getName() + " attacks " + target.name + "!", p.room, p);
     } else if ("look".startsWith(words[0])) {
       p.send(p.room.display(p));
     } else if ("north".startsWith(words[0])) {
@@ -157,6 +163,13 @@ public class Game extends UntypedActor {
   private void sendRoom(String msg, Room room) {
     for (Player p : room.players) {
       p.send(msg);
+    }
+  }
+  
+  private void sendRoomBut(String msg, Room room, Player excluded) {
+    for (Player p : room.players) {
+      if (p != excluded)
+        p.send(msg);
     }
   }
   
