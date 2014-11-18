@@ -45,6 +45,10 @@ public class Game extends UntypedActor {
     } else if (message instanceof DisconnectMsg) {
       Player p = players.remove(getSender());
       p.room.players.remove(p);
+      if (p.target != null) {
+        p.target.target = null;
+        p.target.state = State.STANDING;
+      }
       sendAllSys(p.getName() + " disconnected");
     } else if (message instanceof String) {
       String cmd = ((String) message).trim();
