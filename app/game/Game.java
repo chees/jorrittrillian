@@ -69,6 +69,18 @@ public class Game extends UntypedActor {
       move(p, "down", 5);
     } else if ("east".startsWith(words[0])) {
       move(p, "east", 1);
+    } else if ("kill".startsWith(words[0])) {
+      if (words.length < 2) {
+        p.send("Kill what?");
+        return;
+      }
+      Mob target = p.room.getMob(words[1]);
+      if (target == null) {
+        p.send("There's no " + escapeHtml4(words[1]) + " to kill here.");
+        return;
+      }
+      p.send("You attack " + target.name + "!");
+      sendAllBut(p.getName() + " attacks " + target.name + "!", p);
     } else if ("look".startsWith(words[0])) {
       p.send(p.room.display(p));
     } else if ("north".startsWith(words[0])) {

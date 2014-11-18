@@ -44,8 +44,8 @@
     }
   ],
   "mobs": [
-    {"id": 100, "name": "Kylidra"},
-    {"id": 101, "name": "A Random Scholar"}
+    {"id": 100, "name": "Kylidra", "keywords": ["kylidra"]},
+    {"id": 101, "name": "A Random Scholar", "keywords": ["scholar", "random"]}
   ],
   "respawns": [
     {"mob": 100, "room": 100},

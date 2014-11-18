@@ -54,4 +54,12 @@ public class Room {
         output += p.display();
     return output;
   }
+
+  public Mob getMob(String keyword) {
+    for (Mob m : mobs)
+      for (String kw : m.keywords)
+        if (kw.startsWith(keyword.toLowerCase()))
+          return m;
+    return null;
+  }
 }
