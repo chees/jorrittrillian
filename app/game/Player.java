@@ -5,7 +5,7 @@ import akka.actor.ActorRef;
 
 public class Player {
 
-  enum State { WAITING_FOR_NAME, STANDING }
+  enum State { WAITING_FOR_NAME, STANDING, FIGHTING }
   
   private ActorRef connection;
   private String name;

@@ -6,7 +6,9 @@ import game.Player.State;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import scala.concurrent.duration.Duration;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 
@@ -16,6 +18,7 @@ public class Game extends UntypedActor {
   private List<Area> areas;
   private Map<Integer, Room> rooms;
   //private Map<Integer, Mob> mobs;
+  private long tick;
   
   private Game() {
     players = new HashMap<>();
@@ -24,6 +27,10 @@ public class Game extends UntypedActor {
     rooms = loader.getRooms();
     //mobs = loader.getMobs();
     for (Area a : areas) a.respawn();
+    
+    getContext().system().scheduler().scheduleOnce(
+        Duration.create(250, TimeUnit.MILLISECONDS),
+        getSelf(), new Tick(), getContext().dispatcher(), null);
   }
   
   @Override
@@ -35,16 +42,30 @@ public class Game extends UntypedActor {
       players.put(getSender(), p);
       room.players.add(p);
       p.send("What is your name?");
-    } if (message instanceof DisconnectMsg) {
+    } else if (message instanceof DisconnectMsg) {
       Player p = players.remove(getSender());
       p.room.players.remove(p);
       sendAllSys(p.getName() + " disconnected");
-    } if (message instanceof String) {
+    } else if (message instanceof String) {
       String cmd = ((String) message).trim();
       if (cmd.length() > 0)
         handleCommand(cmd, players.get(getSender()));
+    } else if (message instanceof Tick) {
+      tick();
+      getContext().system().scheduler().scheduleOnce(
+          Duration.create(200, TimeUnit.MILLISECONDS),
+          getSelf(), new Tick(), getContext().dispatcher(), null);
     } else {
       unhandled(message);
+    }
+  }
+  
+  private void tick() {
+    tick++;
+    for (Player p : players.values()) {
+      if (p.state == State.FIGHTING && tick % 5 == 0) {
+        p.send("hit");
+      }
     }
   }
   
@@ -79,6 +100,7 @@ public class Game extends UntypedActor {
         p.send("There's no " + escapeHtml4(words[1]) + " to kill here.");
         return;
       }
+      p.state = State.FIGHTING;
       p.send("You attack " + target.name + "!");
       sendAllBut(p.getName() + " attacks " + target.name + "!", p);
     } else if ("look".startsWith(words[0])) {
@@ -146,4 +168,5 @@ public class Game extends UntypedActor {
   
   public static class NewConnectionMsg {}
   public static class DisconnectMsg {}
+  public static class Tick {}
 }
