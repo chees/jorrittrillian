@@ -68,10 +68,21 @@ public class Game extends UntypedActor {
     tick++;
     for (Player p : players.values()) {
       if (p.state == State.FIGHTING && tick % 5 == 0) {
-        p.hp--;
         p.target.hp--;
-        p.send("You: " + p.hp + " " + p.target.name + ": " + p.target.hp);
-        sendRoomBut(p.name + ": " + p.hp + " " + p.target.name + ": " + p.target.hp, p.room, p);
+        if (p.target.hp <= 0) {
+          p.send("You killed " + p.target.name + "!");
+          sendRoomBut(p.name + " killed " + p.target.name + "!", p.room, p);
+          if ("Kylidra".equals(p.target.name))
+            sendRoom("OMG!!! WTF!?!", p.room);
+          p.room.mobs.remove(p.target);
+          p.state = State.STANDING;
+          p.target = null;
+        } else {
+          p.hp--;
+          
+          p.send("You: " + p.hp + " " + p.target.name + ": " + p.target.hp);
+          sendRoomBut(p.name + ": " + p.hp + " " + p.target.name + ": " + p.target.hp, p.room, p);
+        }
       }
     }
   }
