@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import play.Logger;
 import scala.concurrent.duration.Duration;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
@@ -67,35 +68,40 @@ public class Game extends UntypedActor {
   private void tick() {
     tick++;
     for (Player p : players.values()) {
-      if (p.state == State.FIGHTING && tick % 5 == 0) {
-        p.target.hp--;
-        if (p.target.hp <= 0) {
-          p.send("You killed " + p.target.name + "!");
-          sendRoomBut(p.name + " killed " + p.target.name + "!", p.room, p);
-          if ("Kylidra".equals(p.target.name))
-            sendRoom("OMG!!! WTF!?!", p.room);
-          p.room.mobs.remove(p.target);
-          p.state = State.STANDING;
-          p.target = null;
-        } else {
-          p.hp--;
-          if (p.hp <= 0) {
-            p.send("You died!");
-            sendRoomBut(p.name + " died!", p.room, p);
-            p.target.state = State.STANDING;
-            p.target.target = null;
-            p.state = State.STANDING;
-            p.target = null;
-            p.hp = 1;
-            p.room.players.remove(p);
-            p.room = rooms.get(100);
-            p.room.players.add(p);
-            p.send("You are automagically transported back to the watchtower.");
-          } else {
-            p.send("You: " + p.hp + " | " + p.target.name + ": " + p.target.hp);
-            sendRoomBut(p.name + ": " + p.hp + " | " + p.target.name + ": " + p.target.hp, p.room, p);
-          }
-        }
+      if (p.state == State.FIGHTING && tick % 5 == 0)
+        tickFight(p);
+      if (tick % 50 == 0)
+        p.regen();
+    }
+  }
+
+  private void tickFight(Player p) {
+    p.target.hp--;
+    if (p.target.hp <= 0) {
+      p.send("You killed " + p.target.name + "!");
+      sendRoomBut(p.name + " killed " + p.target.name + "!", p.room, p);
+      if ("Kylidra".equals(p.target.name))
+        sendRoom("OMG!!! WTF!?!", p.room);
+      p.room.mobs.remove(p.target);
+      p.state = State.STANDING;
+      p.target = null;
+    } else {
+      p.hp--;
+      if (p.hp <= 0) {
+        p.send("You died!");
+        sendRoomBut(p.name + " died!", p.room, p);
+        p.target.state = State.STANDING;
+        p.target.target = null;
+        p.state = State.STANDING;
+        p.target = null;
+        p.hp = 1;
+        p.room.players.remove(p);
+        p.room = rooms.get(100);
+        p.room.players.add(p);
+        p.send("You are automagically transported back to the watchtower.");
+      } else {
+        p.send("You: " + p.hp + " | " + p.target.name + ": " + p.target.hp);
+        sendRoomBut(p.name + ": " + p.hp + " | " + p.target.name + ": " + p.target.hp, p.room, p);
       }
     }
   }
@@ -143,10 +149,37 @@ public class Game extends UntypedActor {
       move(p, "north", 0);
     } else if ("south".startsWith(words[0])) {
       move(p, "south", 2);
+    } else if ("sleep".startsWith(words[0])) {
+      switch (p.state) {
+      case FIGHTING:
+        p.send("You can't sleep while fighting.");
+        break;
+      case SLEEPING:
+        p.send("You're already sleeping.");
+        break;
+      case STANDING:
+        p.send("You go to sleep.");
+        sendRoomBut(p.name + " goes to sleep.", p.room, p);
+        p.state = State.SLEEPING;
+        break;
+      case WAITING_FOR_NAME:
+        break;
+      default:
+        Logger.warn("Missing sleep case: " + p.state);
+        break;
+      }
     } else if ("up".startsWith(words[0])) {
       move(p, "up", 4);
     } else if ("west".startsWith(words[0])) {
       move(p, "west", 3);
+    } else if ("wake".startsWith(words[0])) {
+      if (p.state == State.SLEEPING) {
+        p.send("You wake up.");
+        sendRoomBut(p.name + " wakes up.", p.room, p);
+        p.state = State.STANDING;
+      } else {
+        p.send("You're not even sleeping.");
+      }
     } else {
       p.send("Huh?");
     }
@@ -155,12 +188,12 @@ public class Game extends UntypedActor {
   private void move(Player p, String direction, int exit) {
     Room origin = p.room;
     if (origin.exits[exit] == 0)
-      p.send("You can't go " + direction + " here");
+      p.send("You can't go " + direction + " here.");
     else {
       origin.players.remove(p);
-      sendRoom(p.getName() + " leaves " + direction, origin);
+      sendRoom(p.getName() + " leaves " + direction + ".", origin);
       Room destination = rooms.get(origin.exits[exit]);
-      sendRoom(p.getName() + " enters", destination);
+      sendRoom(p.getName() + " enters.", destination);
       p.room = destination;
       destination.players.add(p);
       handleCommand("look", p);

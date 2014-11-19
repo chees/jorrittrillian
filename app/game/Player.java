@@ -15,8 +15,11 @@ public class Player extends Character {
     state = State.WAITING_FOR_NAME;
     name = "New player";
     hp = 100;
+    hpMax = hp;
+    hpRegen = 1;
   }
 
+  @Override
   public void send(String msg) {
     connection.tell(new Connection.OutputMsg(msg), null);
   }

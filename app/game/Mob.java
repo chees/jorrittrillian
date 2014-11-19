@@ -12,6 +12,7 @@ public class Mob extends Character {
     name = original.name;
     keywords = original.keywords;
     hp = original.hp;
+    hpMax = hp;
     state = State.STANDING;
   }
   
