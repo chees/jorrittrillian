@@ -79,9 +79,22 @@ public class Game extends UntypedActor {
           p.target = null;
         } else {
           p.hp--;
-          
-          p.send("You: " + p.hp + " " + p.target.name + ": " + p.target.hp);
-          sendRoomBut(p.name + ": " + p.hp + " " + p.target.name + ": " + p.target.hp, p.room, p);
+          if (p.hp <= 0) {
+            p.send("You died!");
+            sendRoomBut(p.name + " died!", p.room, p);
+            p.target.state = State.STANDING;
+            p.target.target = null;
+            p.state = State.STANDING;
+            p.target = null;
+            p.hp = 1;
+            p.room.players.remove(p);
+            p.room = rooms.get(100);
+            p.room.players.add(p);
+            p.send("You are automagically transported back to the watchtower.");
+          } else {
+            p.send("You: " + p.hp + " | " + p.target.name + ": " + p.target.hp);
+            sendRoomBut(p.name + ": " + p.hp + " | " + p.target.name + ": " + p.target.hp, p.room, p);
+          }
         }
       }
     }
