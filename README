@@ -1,6 +1,14 @@
-This is your new Play application
-=================================
+A game for the wedding of Jorrit and Trillian
+=============================================
 
-This file will be packaged with your application, when using `activator dist`.
+To run the app locally:
 
-To run the app locally: `activator ~run`
+    activator ~run
+
+
+To deploy to Heroku:
+
+    git push heroku master
+
+
+http://jt.chees.info/
