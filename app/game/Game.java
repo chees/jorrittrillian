@@ -113,7 +113,7 @@ public class Game extends UntypedActor {
       p.setName(cmd);
       if (p.getName().length() > 0) {
         p.state = State.STANDING;
-        p.send(p.getName() + " it is.");
+        p.send("Welcome " + p.getName());
         sendAllButSys(p.getName() + " joined", p);
         p.send(getIntroduction());
         handleCommand("look", p);
@@ -147,6 +147,8 @@ public class Game extends UntypedActor {
       p.send("You attack " + target.name + "!");
       sendRoomBut(p.getName() + " attacks " + target.name + "!", p.room, p);
     } else if ("look".startsWith(words[0])) {
+      if (p.state == State.SLEEPING)
+        handleCommand("wake", p);
       p.send(p.room.display(p));
     } else if ("north".startsWith(words[0])) {
       move(p, "north", 0);
@@ -189,18 +191,26 @@ public class Game extends UntypedActor {
   }
   
   private void move(Player p, String direction, int exit) {
-    Room origin = p.room;
-    if (origin.exits[exit] == 0)
-      p.send("You can't go " + direction + " here.");
-    else {
-      origin.players.remove(p);
-      sendRoom(p.getName() + " leaves " + direction + ".", origin);
-      Room destination = rooms.get(origin.exits[exit]);
-      sendRoom(p.getName() + " enters.", destination);
-      p.room = destination;
-      destination.players.add(p);
-      handleCommand("look", p);
+    if (p.state == State.FIGHTING) {
+      p.send("You're in the middle of a fight!");
+      return;
     }
+    if (p.state == State.SLEEPING) {
+      p.send("Zzzzzzzzz");
+      return;
+    }
+    Room origin = p.room;
+    if (origin.exits[exit] == 0) {
+      p.send("You can't go " + direction + " here.");
+      return;
+    }
+    origin.players.remove(p);
+    sendRoom(p.getName() + " leaves " + direction + ".", origin);
+    Room destination = rooms.get(origin.exits[exit]);
+    sendRoom(p.getName() + " enters.", destination);
+    p.room = destination;
+    destination.players.add(p);
+    handleCommand("look", p);
   }
   
   private void sendAll(String msg) {
