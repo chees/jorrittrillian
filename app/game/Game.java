@@ -204,9 +204,8 @@ public class Game extends UntypedActor {
   }
   
   private void sendAll(String msg) {
-    for (Player p : players.values()) {
+    for (Player p : players.values())
       p.send(msg);
-    }
   }
   
   private void sendAllSys(String msg) {
@@ -214,10 +213,9 @@ public class Game extends UntypedActor {
   }
   
   private void sendAllBut(String msg, Player excluded) {
-    for (Player p : players.values()) {
+    for (Player p : players.values())
       if (p != excluded)
         p.send(msg);
-    }
   }
   
   private void sendAllButSys(String msg, Player excluded) {
@@ -225,16 +223,15 @@ public class Game extends UntypedActor {
   }
   
   private void sendRoom(String msg, Room room) {
-    for (Player p : room.players) {
-      p.send(msg);
-    }
+    for (Player p : room.players)
+      if (p.state != State.WAITING_FOR_NAME && p.state != State.SLEEPING)
+        p.send(msg);
   }
   
   private void sendRoomBut(String msg, Room room, Player excluded) {
-    for (Player p : room.players) {
-      if (p != excluded)
+    for (Player p : room.players)
+      if (p.state != State.WAITING_FOR_NAME && p.state != State.SLEEPING && p != excluded)
         p.send(msg);
-    }
   }
   
   private String getIntroduction() {
