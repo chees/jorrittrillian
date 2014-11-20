@@ -17,7 +17,8 @@ function sys(msg) {
   output('<span class="sys">' + msg + '</span>');
 }
 
-var ws = new WebSocket('ws://' + window.location.host + '/websocket');
+var protocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
+var ws = new WebSocket(protocol + window.location.host + '/websocket');
 ws.onopen = function(e) {
   sys('Connected');
 };
