@@ -8,6 +8,7 @@ public class Player extends Character {
   private ActorRef connection;
   
   Room room;
+  long exp;
   
   public Player(ActorRef connection, Room room) {
     this.connection = connection;
@@ -17,6 +18,7 @@ public class Player extends Character {
     hp = 100;
     hpMax = hp;
     hpRegen = 1;
+    level = 1;
   }
 
   @Override
@@ -34,5 +36,14 @@ public class Player extends Character {
   
   public String getName() {
     return name;
+  }
+
+  public void addExp(int e) {
+    exp += e;
+    send("You gained " + e + " exp.");
+    if (exp > level * 1000) {
+      level++;
+      send("You leveled up! You're now level " + level);
+    }
   }
 }

@@ -53,8 +53,7 @@ public class Game extends UntypedActor {
       sendAllSys(p.getName() + " disconnected");
     } else if (message instanceof String) {
       String cmd = ((String) message).trim();
-      if (cmd.length() > 0)
-        handleCommand(cmd, players.get(getSender()));
+      handleCommand(cmd, players.get(getSender()));
     } else if (message instanceof Tick) {
       tick();
       getContext().system().scheduler().scheduleOnce(
@@ -85,6 +84,7 @@ public class Game extends UntypedActor {
       p.room.mobs.remove(p.target);
       p.state = State.STANDING;
       p.target = null;
+      p.addExp(100);
     } else {
       p.hp--;
       if (p.hp <= 0) {
@@ -98,7 +98,8 @@ public class Game extends UntypedActor {
         p.room.players.remove(p);
         p.room = rooms.get(100);
         p.room.players.add(p);
-        p.send("You are automagically transported back to the watchtower.");
+        p.exp -= 1000;
+        p.send("You lost 1000 exp and you are automagically transported back to the watchtower.");
       } else {
         p.send("You: " + p.hp + " | " + p.target.name + ": " + p.target.hp);
         sendRoomBut(p.name + ": " + p.hp + " | " + p.target.name + ": " + p.target.hp, p.room, p);
@@ -119,6 +120,8 @@ public class Game extends UntypedActor {
       } else {
         p.send("Try typing a name...");
       }
+    } else if (words[0].length() == 0) {
+      p.send("hp: " + p.hp + " | exp: " + p.exp);
     } else if ("chat".startsWith(words[0])) {
       String msg = escapeHtml4(cmd.substring(words[0].length(), cmd.length()));
       sendAllBut(p.getName() + " chats: " + msg, p);

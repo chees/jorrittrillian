@@ -9,6 +9,7 @@ public abstract class Character {
   public int hpMax;
   public int hpRegen;
   public Character target;
+  public int level;
   
   public String display(Player perspective) {
     if (state == State.FIGHTING)
