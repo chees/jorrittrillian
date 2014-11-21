@@ -17,6 +17,8 @@ function sys(msg) {
   output('<span class="sys">' + msg + '</span>');
 }
 
+// TODO send a keep alive message for Heroku websockets every 30 seconds?
+
 var protocol = window.location.protocol == 'https:' ? 'wss://' : 'ws://';
 var ws = new WebSocket(protocol + window.location.host + '/websocket');
 ws.onopen = function(e) {
