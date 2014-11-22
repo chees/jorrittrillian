@@ -26,8 +26,12 @@ public class Connection extends UntypedActor {
   
   @Override
   public void onReceive(Object message) throws Exception {
-    if (message instanceof String)
-      game.tell(message, getSelf());
+    if (message instanceof String) {
+      if ("ping".equals(message))
+        out.tell("pong", getSelf());
+      else
+        game.tell(message, getSelf());
+    }
     else if (message instanceof OutputMsg)
       out.tell(((OutputMsg)message).msg, getSelf());
     else unhandled(message);
