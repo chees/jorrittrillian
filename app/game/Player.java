@@ -40,8 +40,8 @@ public class Player extends Character {
 
   public void addExp(int e) {
     exp += e;
-    send("You gained " + e + " exp.");
-    if (exp > level * 1000) {
+    send("You gained " + e + " exp. You now have: " + exp);
+    if (exp >= level * 1000) {
       level++;
       send("You leveled up! You're now level " + level);
     }

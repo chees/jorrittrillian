@@ -21,7 +21,7 @@ public abstract class Character {
     if (hp < hpMax) {
       int multiplier = 1;
       if (state == State.SLEEPING)
-        multiplier = 10;
+        multiplier = 40;
       hp = Math.min(hpMax, hp + hpRegen * multiplier);
       send("You regenerate. New hp: " + hp);
     }

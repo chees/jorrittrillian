@@ -28,9 +28,18 @@ public class Area {
   
   public void respawn() {
     for (Respawn respawn : respawns) {
-      Mob mob = new Mob(mobsById.get(respawn.mob));
       Room room = roomsById.get(respawn.room);
-      room.mobs.add(mob);
+      boolean mobInRoom = false;
+      for (Mob m : room.mobs) {
+        if (m.id == respawn.mob) {
+          mobInRoom = true;
+          break;
+        }
+      }
+      if (!mobInRoom) {
+        Mob mob = new Mob(mobsById.get(respawn.mob));
+        room.mobs.add(mob);
+      }
     }
   }
 }

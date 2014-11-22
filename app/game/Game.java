@@ -67,10 +67,15 @@ public class Game extends UntypedActor {
   private void tick() {
     tick++;
     for (Player p : players.values()) {
-      if (p.state == State.FIGHTING && tick % 5 == 0)
+      if (p.state == State.FIGHTING && tick % 1 == 0)
         tickFight(p);
-      if (tick % 50 == 0)
+      if (tick % (5 * 10) == 0)
         p.regen();
+    }
+    if (tick % (5 * 60) == 0) {
+      sendAll("You feel a strange wind.");
+      for (Area a : areas)
+        a.respawn();
     }
   }
 
@@ -84,7 +89,7 @@ public class Game extends UntypedActor {
       p.room.mobs.remove(p.target);
       p.state = State.STANDING;
       p.target = null;
-      p.addExp(100);
+      p.addExp(50 + (int)(Math.random() * 100));
     } else {
       p.hp--;
       if (p.hp <= 0) {
