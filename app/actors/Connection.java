@@ -39,7 +39,6 @@ public class Connection extends UntypedActor {
   
   @Override
   public void postStop() throws Exception {
-    System.out.println("Client disconnected");
     game.tell(new Game.DisconnectMsg(), getSelf());
   }
   

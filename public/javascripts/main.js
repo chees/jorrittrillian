@@ -54,6 +54,8 @@ input.closest('form').on('submit', function(e) {
   output('<span class="in">' + htmlEncode(input.val()) + '</span>');
   if (input.val() == 'ping') {
     sys('Ping: ' + ping);
+  } else if (input.val() == 'help') {
+    output($('[data-role="help"]').html());
   } else {
     ws.send(input.val());
   }

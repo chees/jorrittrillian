@@ -118,7 +118,7 @@ public class Game extends UntypedActor {
       p.setName(cmd);
       if (p.getName().length() > 0) {
         p.state = State.STANDING;
-        p.send("Welcome " + p.getName());
+        p.send("Welcome " + p.getName() + " :)");
         sendAllButSys(p.getName() + " joined", p);
         p.send(getIntroduction());
         handleCommand("look", p);
@@ -129,8 +129,12 @@ public class Game extends UntypedActor {
       p.send("hp: " + p.hp + " | exp: " + p.exp);
     } else if ("chat".startsWith(words[0])) {
       String msg = escapeHtml4(cmd.substring(words[0].length(), cmd.length()));
-      sendAllBut(p.getName() + " chats: " + msg, p);
-      p.send("You chat: " + msg);
+      if (msg.isEmpty()) {
+        p.send("Chat what?");
+      } else {
+        sendAllBut(p.getName() + " chats: " + msg, p);
+        p.send("You chat: " + msg);
+      }
     } else if ("down".startsWith(words[0])) {
       move(p, "down", 5);
     } else if ("east".startsWith(words[0])) {
