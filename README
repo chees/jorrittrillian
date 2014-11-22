@@ -17,9 +17,13 @@ http://jt.chees.info/
 
 TODO:
 - multi player fights
+- if (target.hp == 0) You can't attack target
+- flee
+- emotes
 - Starcraft area
 - Guild Wars area
 - Diablo area
+- Borderlands area
 - endboss area
 - achievements
 - items

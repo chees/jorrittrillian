@@ -12,6 +12,7 @@ body {
 h1, h2 {
   margin: 0;
 }
+
 .output {
   flex-grow: 1;
   overflow-y: scroll;
@@ -44,4 +45,9 @@ h1, h2 {
 }
 .help {
   background-color: #efe;
+}
+.portrait {
+  vertical-align: middle;
+  width: 64px;
+  height: 64px;
 }

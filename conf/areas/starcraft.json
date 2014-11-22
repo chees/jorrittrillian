@@ -1,0 +1,25 @@
+{
+  "rooms": [
+    {
+      "id": 300,
+      "title": "Entrance To An Ant Hill",
+      "description": "You are at the entrance of what seems to be a huge ant hill. Disturbing sounds are coming from the hole.",
+      "exits": [0, 301, 0, 204, 0, 0]
+    },
+    {
+      "id": 301,
+      "title": "A Dark Tunnel",
+      "description": "There are tunnels leading north and east. West is the entrance of this place.",
+      "exits": [310, 302, 0, 300, 0, 0]
+    }
+  ],
+  "mobs": [
+    {"id": 300, "name": "<img src=\"/assets/images/raynor.gif\" class=\"portrait\"> Captain Raynor", "keywords": ["raynor", "captain"]},
+    {"id": 301, "name": "<img src=\"/assets/images/zergling.gif\" class=\"portrait\"> A zergling", "keywords": ["zergling"], "hp": 50},
+    {"id": 302, "name": "<img src=\"/assets/images/kerrigan.gif\" class=\"portrait\"> Kerrigan", "keywords": ["kerrigan", "sarah"], "hp": 200}
+  ],
+  "respawns": [
+    {"mob": 300, "room": 300},
+    {"mob": 301, "room": 301}
+  ]
+}

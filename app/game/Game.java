@@ -73,7 +73,7 @@ public class Game extends UntypedActor {
         p.regen();
     }
     if (tick % (5 * 60) == 0) {
-      sendAll("You feel a strange wind.");
+      sendAllAwake("You feel a strange wind.");
       for (Area a : areas)
         a.respawn();
     }
@@ -225,6 +225,12 @@ public class Game extends UntypedActor {
   private void sendAll(String msg) {
     for (Player p : players.values())
       p.send(msg);
+  }
+  
+  private void sendAllAwake(String msg) {
+    for (Player p : players.values())
+      if (p.state != State.WAITING_FOR_NAME && p.state != State.SLEEPING)
+        p.send(msg);
   }
   
   private void sendAllSys(String msg) {
