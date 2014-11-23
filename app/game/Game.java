@@ -163,6 +163,9 @@ public class Game extends UntypedActor {
       move(p, "north", 0);
     } else if ("south".startsWith(words[0])) {
       move(p, "south", 2);
+    } else if ("setlevel".startsWith(words[0])) {
+      // TODO remove this command
+      p.level = Integer.parseInt(words[1]);
     } else if ("sleep".startsWith(words[0])) {
       switch (p.state) {
       case FIGHTING:
@@ -220,6 +223,30 @@ public class Game extends UntypedActor {
     p.room = destination;
     destination.players.add(p);
     handleCommand("look", p);
+    handleEntry(p);
+  }
+  
+  private void handleEntry(Player p) {
+    if (p.room.id == 300) {
+      if (p.level < 2) {
+        sendRoom("Raynor says: Get out of here kid!", p.room);
+        handleCommand("west", p);
+      } else {
+        sendRoom("Oh hi, I'm having some trouble with my wife. She's in there somewhere complaining about her hair. Maybe you could talk to her?", p.room);
+      }
+    }
+    if (p.room.id == 309) {
+      Mob kerrigan = p.room.getMob("kerrigan");
+      if (kerrigan != null && kerrigan.state == State.STANDING) {
+        sendRoom("Noooo, my hair looks terrible! Nobody can see me like this! DIE!!", p.room);
+        p.send("Kerrigan attacks you!");
+        sendRoomBut("Kerrigan attacks " + p.name + "!", p.room, p);
+        p.state = State.FIGHTING;
+        p.target = kerrigan;
+        kerrigan.state = State.FIGHTING;
+        kerrigan.target = p;
+      }
+    }
   }
   
   private void sendAll(String msg) {
@@ -260,7 +287,9 @@ public class Game extends UntypedActor {
   }
   
   private String getIntroduction() {
-    return "The floor suddenly opens up and you fall through a big hole.<br>" +
+    return "<br>Congratulations on your marriage! This is a little game that you can play together. Depending on how well you do there might even be real loot at the end.<br>" +
+        "Remember that you can type <em>help</em> to get some help. Have fun!<br><br>" +
+        "The floor suddenly opens up and you fall through a big hole.<br>" +
         "You pass out...<br><br>" +
         "When you wake up you look around:";
   }

@@ -11,6 +11,72 @@
       "title": "A Dark Tunnel",
       "description": "There are tunnels leading north and east. West is the entrance of this place.",
       "exits": [310, 302, 0, 300, 0, 0]
+    },
+    {
+      "id": 302,
+      "title": "A Winding Tunnel",
+      "description": "The tunnel here is bending from west to south.",
+      "exits": [0, 0, 303, 301, 0, 0]
+    },
+    {
+      "id": 303,
+      "title": "A Room In The Tunnel",
+      "description": "This part of the tunnel is lot bigger and seems more like a room. What are they doing in here?",
+      "exits": [302, 0, 304, 0, 0, 0]
+    },
+    {
+      "id": 304,
+      "title": "Splitting Tunnels",
+      "description": "The tunnel splits up in many directions, all looking dark.",
+      "exits": [303, 312, 0, 305, 0, 311]
+    },
+    {
+      "id": 305,
+      "title": "A Windy Tunnel",
+      "description": "You can feel a draft following the tunnel east and west.",
+      "exits": [0, 304, 0, 306, 0, 0]
+    },
+    {
+      "id": 306,
+      "title": "A Long Curve",
+      "description": "You are in a long curved part of the tunnel. You can go north to follow the curve or east to make your way back to safety.",
+      "exits": [307, 305, 0, 0, 0, 0]
+    },
+    {
+      "id": 307,
+      "title": "A Long Curve",
+      "description": "You are in a long curved part of the tunnel. In the east you see a faint light.",
+      "exits": [0, 308, 306, 0, 0, 0]
+    },
+    {
+      "id": 308,
+      "title": "A Light In The Tunnel",
+      "description": "This part of the tunnel is lit up, but the light is mostly coming from down below. You have the feeling that might be the end of the tunnel.",
+      "exits": [0, 0, 0, 307, 0, 309]
+    },
+    {
+      "id": 309,
+      "title": "Kerrigan's Lair",
+      "description": "This is where Kerrigan hangs out when she's not mind controlling things.",
+      "exits": [0, 0, 0, 0, 308, 0]
+    },
+    {
+      "id": 310,
+      "title": "A Dead End",
+      "description": "You're at a dead end. As long as you're not dead yourself you can always go back south.",
+      "exits": [0, 0, 301, 0, 0, 0]
+    },
+    {
+      "id": 311,
+      "title": "A Deep Hole",
+      "description": "You are in a deep hole. This is probably where the little zerglings sleep at night.",
+      "exits": [0, 0, 0, 0, 304, 0]
+    },
+    {
+      "id": 312,
+      "title": "A Random Room",
+      "description": "It's not really clear what this room is used for. In the corner something is scribbled on the wall: goo.gl/RFlt2A",
+      "exits": [0, 0, 0, 304, 0, 0]
     }
   ],
   "mobs": [
@@ -20,6 +86,13 @@
   ],
   "respawns": [
     {"mob": 300, "room": 300},
-    {"mob": 301, "room": 301}
+    {"mob": 301, "room": 301},
+    {"mob": 301, "room": 302},
+    {"mob": 301, "room": 303},
+    {"mob": 301, "room": 304},
+    {"mob": 301, "room": 305},
+    {"mob": 301, "room": 306},
+    {"mob": 301, "room": 307},
+    {"mob": 302, "room": 309}
   ]
 }

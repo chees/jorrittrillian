@@ -39,15 +39,20 @@ h1, h2 {
   color: green;
 }
 
+.help {
+  background-color: #efe;
+}
 .room {
   background-color: #f6f6f6;
   padding: 5px 0;
-}
-.help {
-  background-color: #efe;
 }
 .portrait {
   vertical-align: middle;
   width: 64px;
   height: 64px;
+  margin: 2px;
+  display: none;
+}
+.room .portrait {
+  display: inline;
 }
