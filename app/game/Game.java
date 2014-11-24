@@ -268,6 +268,53 @@ public class Game extends UntypedActor {
         handleCommand("south", p);
       }
     }
+    else if (p.room.id == 403) {
+      moveClaptrap(p.room, "west", 402,
+          "<audio src=\"/assets/sounds/Claptrap- N - Lets go this way.mp3\" autoplay></audio>" +
+          "Claptrap says: You'll never catch Claptrap! That's me you know. I am faster than your own shadow. " +
+          "Or my shadow, but your shadow looks bigger so it's more impressive if I'm faster than that.");
+    }
+    else if (p.room.id == 402) {
+      moveClaptrap(p.room, "north", 405,
+          "<audio src=\"/assets/sounds/Claptrap- N - Over here.mp3\" autoplay></audio>");
+    }
+    else if (p.room.id == 405) {
+      moveClaptrap(p.room, "north", 408,
+          "<audio src=\"/assets/sounds/Claptrap- N - Onward.mp3\" autoplay></audio>" +
+          "Claptrap says: I hope you have your sound on, cause I'm about to sing you a song!");
+    }
+    else if (p.room.id == 408) {
+      moveClaptrap(p.room, "east", 409,
+          "<audio src=\"/assets/sounds/Claptrap- Wubwubwub.mp3\" autoplay></audio>");
+    }
+    else if (p.room.id == 409) {
+      moveClaptrap(p.room, "east", 410,
+          "<audio src=\"/assets/sounds/Claptrap- N - Just follow the silly sound of my voice.mp3\" autoplay></audio>");
+    }
+    else if (p.room.id == 410) {
+      moveClaptrap(p.room, "south", 407,
+          "<audio src=\"/assets/sounds/Claptrap- N - Vamanos Minion.mp3\" autoplay></audio>");
+    }
+    else if (p.room.id == 407) {
+      moveClaptrap(p.room, "south", 404,
+          "<audio src=\"/assets/sounds/Claptrap- N - This a way Minion.mp3\" autoplay></audio>");
+    }
+    else if (p.room.id == 404) {
+      moveClaptrap(p.room, "west", 403,
+          "<audio src=\"/assets/sounds/Claptrap- N - This way.mp3\" autoplay></audio>");
+    }
+  }
+  
+  private void moveClaptrap(Room from, String direction, int to, String say) {
+    Mob claptrap = from.getMob("claptrap");
+    if (claptrap != null) {
+      sendRoom(say, from);
+      sendRoom("Claptrap leaves " + direction + ".", from);
+      from.mobs.remove(claptrap);
+      Room destination = rooms.get(to);
+      sendRoom("Claptrap rides in. Quick, GRAB him!", destination);
+      destination.mobs.add(claptrap);
+    }
   }
   
   private void sendAll(String msg) {
