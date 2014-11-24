@@ -29,6 +29,7 @@ public class Game extends UntypedActor {
     //mobs = loader.getMobs();
     for (Area a : areas) a.respawn();
     
+    
     getContext().system().scheduler().scheduleOnce(
         Duration.create(250, TimeUnit.MILLISECONDS),
         getSelf(), new Tick(), getContext().dispatcher(), null);
@@ -229,13 +230,13 @@ public class Game extends UntypedActor {
   private void handleEntry(Player p) {
     if (p.room.id == 300) {
       if (p.level < 2) {
-        sendRoom("Raynor says: Get out of here kid!", p.room);
+        sendRoom("Raynor says: Get out of here kid! Get a bit stronger first.", p.room);
         handleCommand("west", p);
       } else {
         sendRoom("Oh hi, I'm having some trouble with my wife. She's in there somewhere complaining about her hair. Maybe you could talk to her?", p.room);
       }
     }
-    if (p.room.id == 309) {
+    else if (p.room.id == 309) {
       Mob kerrigan = p.room.getMob("kerrigan");
       if (kerrigan != null && kerrigan.state == State.STANDING) {
         sendRoom("Noooo, my hair looks terrible! Nobody can see me like this! DIE!!", p.room);
@@ -247,6 +248,10 @@ public class Game extends UntypedActor {
         kerrigan.target = p;
       }
     }
+    else if (p.room.id == 400) {
+      //if ()
+    }
+    
   }
   
   private void sendAll(String msg) {
@@ -288,7 +293,8 @@ public class Game extends UntypedActor {
   
   private String getIntroduction() {
     return "<br>Congratulations on your marriage! This is a little game that you can play together. Depending on how well you do there might even be real loot at the end.<br>" +
-        "Remember that you can type <em>help</em> to get some help. Have fun!<br><br>" +
+        "Btw, I only tested it in Chrome, so it might not work in other browsers =)<br>" +
+        "Remember that you can type <em>help</em> at any time to to get some help. Have fun!<br><br>" +
         "The floor suddenly opens up and you fall through a big hole.<br>" +
         "You pass out...<br><br>" +
         "When you wake up you look around:";

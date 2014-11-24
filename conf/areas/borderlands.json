@@ -1,0 +1,82 @@
+{
+  "rooms": [
+    {
+      "id": 400,
+      "title": "The Hyperion Gate",
+      "description": "<img src=\"/assets/images/hyperion.png\" width=\"400\" height=\"250\"><br>A scary Hyperion robot is blocking the path.",
+      "exits": [401, 0, 200, 0, 0, 0]
+    },
+    {
+      "id": 401,
+      "title": "Past The Gate",
+      "description": "The gate in the south closed and now you can only go north. What will await you there?",
+      "exits": [403, 0, 0, 0, 0, 0]
+    },
+    {
+      "id": 402,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [405, 403, 0, 0, 0, 0]
+    },
+    {
+      "id": 403,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [406, 404, 401, 402, 0, 0]
+    },
+    {
+      "id": 404,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [407, 0, 0, 403, 0, 0]
+    },
+    {
+      "id": 405,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [408, 406, 402, 0, 0, 0]
+    },
+    {
+      "id": 406,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [409, 407, 403, 405, 0, 0]
+    },
+    {
+      "id": 407,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [410, 0, 404, 406, 0, 0]
+    },
+    {
+      "id": 408,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [0, 409, 405, 0, 0, 0]
+    },
+    {
+      "id": 409,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [411, 410, 406, 408, 0, 0]
+    },
+    {
+      "id": 410,
+      "title": "The Courtyard",
+      "description": "You're in a huge courtyard. You could probably walk here in circles for a long time.",
+      "exits": [0, 0, 407, 409, 0, 0]
+    },
+    {
+      "id": 411,
+      "title": "A Teleporter",
+      "description": "This is clearly a teleportation room. However, the teleportation machine seems to be missing a thingy.",
+      "exits": [0, 0, 409, 0, 0, 0]
+    }
+  ],
+  "mobs": [
+    {"id": 400, "name": "<img src=\"/assets/images/claptrap.jpg\" class=\"portrait\"> Claptrap", "keywords": ["claptrap"]}
+  ],
+  "respawns": [
+    {"mob": 400, "room": 403, "areaUnique": true}
+  ]
+}

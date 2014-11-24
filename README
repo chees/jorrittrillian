@@ -3,7 +3,7 @@ A game for the wedding of Jorrit and Trillian
 
 To run the app locally:
 
-    activator ~run
+    sbt ~run
 
 
 To deploy to Heroku:
@@ -11,20 +11,25 @@ To deploy to Heroku:
     git push heroku master
 
 
-http://jt.chees.info/
+It should then be running at:
+
+    http://jt.chees.info/
 
 
 
 TODO:
 - multi player fights
 - if (target.hp == 0) You can't attack target
-- flee
 - emotes
-- Starcraft area
+- recall
+
+- Borderlands area
 - Guild Wars area
 - Diablo area
-- Borderlands area
 - endboss area
+
 - achievements
+- rickroll link achievement
+- flee
 - items
 - save

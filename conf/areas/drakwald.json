@@ -4,7 +4,7 @@
       "id": 200,
       "title": "North Of The Watchtower",
       "description": "You are just north of the watchtower. In all other directions lies the Drakwald forest.",
-      "exits": [0, 201, 101, 215, 0, 0]
+      "exits": [400, 201, 101, 215, 0, 0]
     },
     {
       "id": 201,

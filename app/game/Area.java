@@ -18,25 +18,28 @@ public class Area {
   }
   
   public void init() {
-    for (Room r : rooms) {
+    for (Room r : rooms)
       roomsById.put(r.id, r);
-    }
-    for (Mob m : mobs) {
+    for (Mob m : mobs)
       mobsById.put(m.id, m);
-    }
   }
   
   public void respawn() {
     for (Respawn respawn : respawns) {
       Room room = roomsById.get(respawn.room);
-      boolean mobInRoom = false;
-      for (Mob m : room.mobs) {
-        if (m.id == respawn.mob) {
-          mobInRoom = true;
-          break;
-        }
+      boolean shouldSpawn = true;
+      
+      if (respawn.areaUnique) {
+        for (Room r : rooms)
+          if (r.containsMob(respawn.mob))
+            shouldSpawn = false;
+      } else {
+        for (Mob m : room.mobs)
+          if (m.id == respawn.mob)
+            shouldSpawn = false;
       }
-      if (!mobInRoom) {
+      
+      if (shouldSpawn) {
         Mob mob = new Mob(mobsById.get(respawn.mob));
         room.mobs.add(mob);
       }

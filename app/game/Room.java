@@ -62,4 +62,11 @@ public class Room {
           return m;
     return null;
   }
+  
+  public boolean containsMob(int id) {
+    for (Mob m : mobs)
+      if (m.id == id)
+        return true;
+    return false;
+  }
 }
