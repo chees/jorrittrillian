@@ -10,6 +10,7 @@ public class Player extends Character {
   Room room;
   long exp;
   boolean killedKerrigan;
+  boolean caughtClaptrap;
   
   public Player(ActorRef connection, Room room) {
     this.connection = connection;

@@ -117,6 +117,7 @@ public class Game extends UntypedActor {
   
   private void handleCommand(String cmd, Player p) {
     String[] words = cmd.split(" ");
+    // TODO refactor this giant if else:
     if (p.state == State.WAITING_FOR_NAME) {
       p.setName(cmd);
       if (p.getName().length() > 0) {
@@ -142,6 +143,14 @@ public class Game extends UntypedActor {
       move(p, "down", 5);
     } else if ("east".startsWith(words[0])) {
       move(p, "east", 1);
+    } else if ("grab".startsWith(words[0])) {
+      if (p.room.containsMob(400)) {
+        p.send("You grab Claptrap! You take a thingy from him before letting him go again.");
+        sendRoomBut(p.name + " grabs Claptrap! " + p.name + " takes a thingy from him before letting him go again.", p.room, p);
+        p.caughtClaptrap = true;
+      } else {
+        p.send("Grab what?");
+      }
     } else if ("kill".startsWith(words[0])) {
       if (words.length < 2) {
         p.send("Kill what?");
@@ -239,6 +248,7 @@ public class Game extends UntypedActor {
   }
   
   private void handleEntry(Player p) {
+    // TODO refactor this giant if else:
     if (p.room.id == 300) {
       if (p.level < 2) {
         sendRoom("Raynor says: Get out of here kid! Get a bit stronger first.", p.room);
@@ -303,6 +313,9 @@ public class Game extends UntypedActor {
       moveClaptrap(p.room, "west", 403,
           "<audio src=\"/assets/sounds/Claptrap- N - This way.mp3\" autoplay></audio>");
     }
+    else if (p.room.id == 411 && p.caughtClaptrap) {
+      // TODO teleport to next area
+    }
   }
   
   private void moveClaptrap(Room from, String direction, int to, String say) {
@@ -316,6 +329,8 @@ public class Game extends UntypedActor {
       destination.mobs.add(claptrap);
     }
   }
+  
+  // TODO refactor send* methods:
   
   private void sendAll(String msg) {
     for (Player p : players.values())
