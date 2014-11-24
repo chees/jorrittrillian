@@ -156,6 +156,11 @@ public class Game extends UntypedActor {
         p.send("You can't attack " + target.name + ".");
         return;
       }
+      if (target.state == State.FIGHTING) {
+        p.send("OMG KillStealer!");
+        sendRoomBut("OMG " + p.name + " is KS-ing!", p.room, p);
+        return;
+      }
       p.state = State.FIGHTING;
       p.target = target;
       target.state = State.FIGHTING;
