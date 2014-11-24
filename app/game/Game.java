@@ -81,12 +81,14 @@ public class Game extends UntypedActor {
   }
 
   private void tickFight(Player p) {
-    p.target.hp--;
+    p.target.hp -= p.level;
     if (p.target.hp <= 0) {
       p.send("You killed " + p.target.name + "!");
       sendRoomBut(p.name + " killed " + p.target.name + "!", p.room, p);
-      if ("Kylidra".equals(p.target.name))
+      if (((Mob)p.target).id == 100)
         sendRoom("OMG!!! WTF!?!", p.room);
+      if (((Mob)p.target).id == 302)
+        p.killedKerrigan = true;
       p.room.mobs.remove(p.target);
       p.state = State.STANDING;
       p.target = null;
@@ -148,6 +150,10 @@ public class Game extends UntypedActor {
       Mob target = p.room.getMob(words[1]);
       if (target == null) {
         p.send("There's no " + escapeHtml4(words[1]) + " to kill here.");
+        return;
+      }
+      if (target.hp == 0) {
+        p.send("You can't attack " + target.name + ".");
         return;
       }
       p.state = State.FIGHTING;
@@ -249,9 +255,14 @@ public class Game extends UntypedActor {
       }
     }
     else if (p.room.id == 400) {
-      //if ()
+      if (p.killedKerrigan) {
+        p.send("After surviving Kerrigan this little robot is no match for you anymore and you easily walk past it.");
+        handleCommand("north", p);
+      } else {
+        p.send("Oh no, the robot starts shooting at you! Run!");
+        handleCommand("south", p);
+      }
     }
-    
   }
   
   private void sendAll(String msg) {

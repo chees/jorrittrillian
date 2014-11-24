@@ -44,7 +44,7 @@
     }
   ],
   "mobs": [
-    {"id": 100, "name": "Kylidra", "keywords": ["kylidra"]},
+    {"id": 100, "name": "Kylidra", "keywords": ["kylidra"], "hp": 1},
     {"id": 101, "name": "A Random Scholar", "keywords": ["scholar", "random"]}
   ],
   "respawns": [

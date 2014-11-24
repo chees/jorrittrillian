@@ -82,7 +82,7 @@
   "mobs": [
     {"id": 300, "name": "<img src=\"/assets/images/raynor.gif\" class=\"portrait\"> Captain Raynor", "keywords": ["raynor", "captain"]},
     {"id": 301, "name": "<img src=\"/assets/images/zergling.gif\" class=\"portrait\"> A zergling", "keywords": ["zergling"], "hp": 50},
-    {"id": 302, "name": "<img src=\"/assets/images/kerrigan.gif\" class=\"portrait\"> Kerrigan", "keywords": ["kerrigan", "sarah"], "hp": 200}
+    {"id": 302, "name": "<img src=\"/assets/images/kerrigan.gif\" class=\"portrait\"> Kerrigan", "keywords": ["kerrigan", "sarah"], "hp": 250}
   ],
   "respawns": [
     {"mob": 300, "room": 300},
