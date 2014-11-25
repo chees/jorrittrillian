@@ -182,6 +182,29 @@ public class Game extends UntypedActor {
       p.send(p.room.display(p));
     } else if ("north".startsWith(words[0])) {
       move(p, "north", 0);
+    } else if ("recall".startsWith(words[0])) {
+      switch (p.state) {
+      case FIGHTING:
+        p.send("You can't recall while fighting.");
+        break;
+      case SLEEPING:
+        p.send("You can't recall while sleeping.");
+        break;
+      case STANDING:
+        p.send("You teleport back to the watchtower.");
+        sendRoomBut(p.name + " disappears in a puff of smoke.", p.room, p);
+        p.room.players.remove(p);
+        p.room = rooms.get(100);
+        p.room.players.add(p);
+        sendRoomBut(p.name + " appears in a puff of smoke.", p.room, p);
+        handleCommand("look", p);
+        break;
+      case WAITING_FOR_NAME:
+        break;
+      default:
+        Logger.warn("Missing recall case: " + p.state);
+        break;
+      }
     } else if ("south".startsWith(words[0])) {
       move(p, "south", 2);
     } else if ("setlevel".startsWith(words[0])) {
