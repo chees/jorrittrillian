@@ -5,6 +5,7 @@ public class Mob extends Character {
     
   public int id;
   public String[] keywords;
+  public int staredAt;
 
   public Mob() {}
   public Mob(Mob original) {

@@ -3,13 +3,19 @@
     {
       "id": 500,
       "title": "The Endbosses",
-      "description": "TODO",
+      "description": "This is it! You've made it to the final challenge. There are 2 fierce endbosses in this room, staring intently at you.",
+      "exits": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "id": 501,
+      "title": "Ultimate Victory",
+      "description": "Awesome, you won! You are the ultimate adventurer. I hope you'll have a happy marriage :)",
       "exits": [0, 0, 0, 0, 0, 0]
     }
   ],
   "mobs": [
-    {"id": 500, "name": "Gwen", "keywords": ["gwen"]},
-    {"id": 501, "name": "Rhys", "keywords": ["rhys"]}
+    {"id": 500, "name": "<img src=\"/assets/images/gwen.png\" class=\"portrait\"> Gwen", "keywords": ["gwen"]},
+    {"id": 501, "name": "<img src=\"/assets/images/rhys.png\" class=\"portrait\"> Rhys", "keywords": ["rhys"]}
   ],
   "respawns": [
     {"mob": 500, "room": 500},

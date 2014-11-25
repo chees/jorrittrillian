@@ -229,6 +229,41 @@ public class Game extends UntypedActor {
         Logger.warn("Missing sleep case: " + p.state);
         break;
       }
+    } else if ("stare".startsWith(words[0])) {
+      if (p.state == State.SLEEPING) {
+        p.send("You stare at your dreams.");
+        return;
+      }
+      if (words.length < 2) {
+        p.send("You stare into the void.");
+        sendRoomBut(p.name + " stares into the void.", p.room, p);
+        return;
+      }
+      Mob target = p.room.getMob(words[1]);
+      if (target == null) {
+        p.send("There's no " + escapeHtml4(words[1]) + " to stare at.");
+        return;
+      }
+      p.send("You stare at " + target.name + ".");
+      sendRoomBut(p.name + " stares at " + target.name + ".", p.room, p);
+      if (target.id == 500 || target.id == 501) {
+        target.staredAt++;
+        if (target.staredAt == 1)
+          sendRoom(target.name + " stares back.", p.room);
+        else if (target.staredAt == 2)
+          sendRoom(target.name + " stares back some more.", p.room);
+        else if (target.staredAt == 3)
+          sendRoom(target.name + " stares back even more!", p.room);
+        else if (target.staredAt == 4) {
+          sendRoom(target.name + " says: Fine, you win! meow<br>" + target.name + " walks away.", p.room);
+          p.room.mobs.remove(target);
+          sendRoomBut(p.name + " disappears.", p.room, p);
+          p.room.players.remove(p);
+          p.room = rooms.get(501);
+          p.room.players.add(p);
+          handleCommand("look", p);
+        }
+      }
     } else if ("up".startsWith(words[0])) {
       move(p, "up", 4);
     } else if ("west".startsWith(words[0])) {
@@ -337,8 +372,8 @@ public class Game extends UntypedActor {
           "<audio src=\"/assets/sounds/Claptrap- N - This way.mp3\" autoplay></audio>");
     }
     else if (p.room.id == 411 && p.caughtClaptrap) {
-      p.send("You use the thingy to make the teleporter work.");
-      sendRoomBut(p.name + " uses the thingy to make the teleporter work.", p.room, p);
+      p.send("You use your thingy to make the teleporter work.");
+      sendRoomBut(p.name + " uses a thingy to make the teleporter work.", p.room, p);
       p.room.players.remove(p);
       p.room = rooms.get(500);
       p.room.players.add(p);
