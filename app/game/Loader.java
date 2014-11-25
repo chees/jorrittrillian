@@ -17,6 +17,7 @@ public class Loader {
     areas.add(loadArea("drakwald"));
     areas.add(loadArea("starcraft"));
     areas.add(loadArea("borderlands"));
+    areas.add(loadArea("endboss"));
   }
   
   private Area loadArea(String name) {

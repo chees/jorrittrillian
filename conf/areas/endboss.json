@@ -1,0 +1,18 @@
+{
+  "rooms": [
+    {
+      "id": 500,
+      "title": "The Endbosses",
+      "description": "TODO",
+      "exits": [0, 0, 0, 0, 0, 0]
+    }
+  ],
+  "mobs": [
+    {"id": 500, "name": "Gwen", "keywords": ["gwen"]},
+    {"id": 501, "name": "Rhys", "keywords": ["rhys"]}
+  ],
+  "respawns": [
+    {"mob": 500, "room": 500},
+    {"mob": 501, "room": 500}
+  ]
+}

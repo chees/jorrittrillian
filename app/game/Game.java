@@ -337,7 +337,12 @@ public class Game extends UntypedActor {
           "<audio src=\"/assets/sounds/Claptrap- N - This way.mp3\" autoplay></audio>");
     }
     else if (p.room.id == 411 && p.caughtClaptrap) {
-      // TODO teleport to next area
+      p.send("You use the thingy to make the teleporter work.");
+      sendRoomBut(p.name + " uses the thingy to make the teleporter work.", p.room, p);
+      p.room.players.remove(p);
+      p.room = rooms.get(500);
+      p.room.players.add(p);
+      handleCommand("look", p);
     }
   }
   
