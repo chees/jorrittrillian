@@ -490,6 +490,7 @@ public class Game extends UntypedActor {
       output += "<li>You " + a.description + ".";
     }
     output += "</ul>";
+    output += "Send a screenshot of this to Christiaan for your reward. (Yes really, I didn't have time to implement a decent highscore system :P)";
     p.send(output);
   }
   
