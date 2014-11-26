@@ -15,6 +15,7 @@ public class Player extends Character {
   boolean killedKerrigan;
   boolean caughtClaptrap;
   Set<Achievement> achievements;
+  long startTimestamp;
   
   public Player(ActorRef connection, Room room) {
     this.connection = connection;
@@ -26,6 +27,7 @@ public class Player extends Character {
     hpRegen = 1;
     level = 1;
     achievements = new HashSet<>();
+    startTimestamp = System.currentTimeMillis();
   }
 
   @Override

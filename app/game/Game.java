@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import play.Logger;
+import play.Play;
 import scala.concurrent.duration.Duration;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
@@ -83,18 +84,22 @@ public class Game extends UntypedActor {
   private void tickFight(Player p) {
     p.target.hp -= p.level;
     if (p.target.hp <= 0) {
+      if (((Mob)p.target).id == 302) {
+        sendRoom("Kerrigan says: You are such a lucker.", p.room);
+        p.killedKerrigan = true;
+      }
       p.send("You killed " + p.target.name + "!");
       sendRoomBut(p.name + " killed " + p.target.name + "!", p.room, p);
       if (((Mob)p.target).id == 100) {
         sendRoom("OMG!!! WTF!?!", p.room);
         awardAchievement(Achievement.KILL_KYLIDRA, p);
       }
-      if (((Mob)p.target).id == 302)
-        p.killedKerrigan = true;
       p.room.mobs.remove(p.target);
       p.state = State.STANDING;
       p.target = null;
       p.addExp(50 + (int)(Math.random() * 100));
+      if (p.level >= 10)
+        awardAchievement(Achievement.LEVEL_10, p);
     } else {
       p.hp--;
       if (p.hp <= 0) {
@@ -158,6 +163,19 @@ public class Game extends UntypedActor {
       p.send("You grin.");
       sendRoomBut(p.name + " grins.", p.room, p);
       awardAchievement(Achievement.GRIN, p);
+    } else if ("goto".startsWith(words[0]) && Play.isDev()) {
+      if (words.length < 2) {
+        p.send("Goto where?");
+        return;
+      }
+      Room target = rooms.get(Integer.parseInt(words[1]));
+      if (target == null) {
+        p.send("Room not found.");
+        return;
+      }
+      p.room.players.remove(p);
+      p.room = target;
+      p.room.players.add(p);
     } else if ("hop".startsWith(words[0])) {
       p.send("You hop around like a little kid.");
       sendRoomBut(p.name + " hops around like a little kid.", p.room, p);
@@ -218,8 +236,7 @@ public class Game extends UntypedActor {
       }
     } else if ("south".startsWith(words[0])) {
       move(p, "south", 2);
-    } else if ("setlevel".startsWith(words[0])) {
-      // TODO remove this command
+    } else if ("setlevel".startsWith(words[0]) && Play.isDev()) {
       p.level = Integer.parseInt(words[1]);
     } else if ("sleep".startsWith(words[0])) {
       switch (p.state) {
@@ -273,6 +290,9 @@ public class Game extends UntypedActor {
           p.room = rooms.get(501);
           p.room.players.add(p);
           handleCommand("look", p);
+          awardAchievement(Achievement.FINISH, p);
+          if (System.currentTimeMillis() - p.startTimestamp < 1000 * 60 * 10)
+            awardAchievement(Achievement.FINISH_IN_10_MINUTES, p);
         }
       }
     } else if ("up".startsWith(words[0])) {
