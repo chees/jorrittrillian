@@ -56,3 +56,9 @@ h1, h2 {
 .room .portrait {
   display: inline;
 }
+.character {
+  color: #191;
+}
+.character.enemy {
+  color: #911;
+}

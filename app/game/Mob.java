@@ -25,4 +25,9 @@ public class Mob extends Character {
   public void setName(String name) {
     this.name = name;
   }
+  
+  @Override
+  public boolean isEnemy() {
+    return hp > 0;
+  }
 }

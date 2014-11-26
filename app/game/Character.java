@@ -12,9 +12,10 @@ public abstract class Character {
   public int level;
   
   public String display(Player perspective) {
+    String enemy = isEnemy() ? "enemy" : "";
     if (state == State.FIGHTING)
-      return name + " is here, fighting " + (target == perspective ? "you" : target.name) + "!<br>";
-    return name + " is here.<br>";
+      return "<div class=\"character " + enemy + "\">" + name + " is here, fighting " + (target == perspective ? "you" : target.name) + "!</div>";
+    return "<div class=\"character " + enemy + "\">" + name + " is here.</div>";
   }
   
   public void regen() {
@@ -28,4 +29,6 @@ public abstract class Character {
   }
   
   public void send(String msg) {}
+  
+  public abstract boolean isEnemy();
 }

@@ -48,4 +48,9 @@ public class Player extends Character {
       send("You leveled up! You're now level " + level);
     }
   }
+  
+  @Override
+  public boolean isEnemy() {
+    return false;
+  }
 }
