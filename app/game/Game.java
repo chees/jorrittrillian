@@ -151,6 +151,12 @@ public class Game extends UntypedActor {
       } else {
         p.send("Grab what?");
       }
+    } else if ("grin".startsWith(words[0])) {
+      p.send("You grin.");
+      sendRoomBut(p.name + " grins.", p.room, p);
+    } else if ("hop".startsWith(words[0])) {
+      p.send("You hop around like a little kid.");
+      sendRoomBut(p.name + " hops around like a little kid.", p.room, p);
     } else if ("kill".startsWith(words[0])) {
       if (words.length < 2) {
         p.send("Kill what?");
