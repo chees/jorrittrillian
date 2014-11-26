@@ -1,5 +1,8 @@
 package game;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import actors.Connection;
 import akka.actor.ActorRef;
 
@@ -11,6 +14,7 @@ public class Player extends Character {
   long exp;
   boolean killedKerrigan;
   boolean caughtClaptrap;
+  Set<Achievement> achievements;
   
   public Player(ActorRef connection, Room room) {
     this.connection = connection;
@@ -21,6 +25,7 @@ public class Player extends Character {
     hpMax = hp;
     hpRegen = 1;
     level = 1;
+    achievements = new HashSet<>();
   }
 
   @Override

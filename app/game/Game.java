@@ -85,8 +85,10 @@ public class Game extends UntypedActor {
     if (p.target.hp <= 0) {
       p.send("You killed " + p.target.name + "!");
       sendRoomBut(p.name + " killed " + p.target.name + "!", p.room, p);
-      if (((Mob)p.target).id == 100)
+      if (((Mob)p.target).id == 100) {
         sendRoom("OMG!!! WTF!?!", p.room);
+        awardAchievement(Achievement.KILL_KYLIDRA, p);
+      }
       if (((Mob)p.target).id == 302)
         p.killedKerrigan = true;
       p.room.mobs.remove(p.target);
@@ -98,6 +100,7 @@ public class Game extends UntypedActor {
       if (p.hp <= 0) {
         p.send("You died!");
         sendRoomBut(p.name + " died!", p.room, p);
+        awardAchievement(Achievement.DIE, p);
         p.target.state = State.STANDING;
         p.target.target = null;
         p.state = State.STANDING;
@@ -154,6 +157,7 @@ public class Game extends UntypedActor {
     } else if ("grin".startsWith(words[0])) {
       p.send("You grin.");
       sendRoomBut(p.name + " grins.", p.room, p);
+      awardAchievement(Achievement.GRIN, p);
     } else if ("hop".startsWith(words[0])) {
       p.send("You hop around like a little kid.");
       sendRoomBut(p.name + " hops around like a little kid.", p.room, p);
@@ -174,6 +178,7 @@ public class Game extends UntypedActor {
       if (target.state == State.FIGHTING) {
         p.send("OMG KillStealer!");
         sendRoomBut("OMG " + p.name + " is KS-ing!", p.room, p);
+        awardAchievement(Achievement.KILL_STEALER, p);
         return;
       }
       p.state = State.FIGHTING;
@@ -436,6 +441,14 @@ public class Game extends UntypedActor {
     for (Player p : room.players)
       if (p.state != State.WAITING_FOR_NAME && p.state != State.SLEEPING && p != excluded)
         p.send(msg);
+  }
+  
+  private void awardAchievement(Achievement a, Player p) {
+    if (p.achievements.contains(a))
+      return;
+    p.achievements.add(a);
+    p.send("<div class=\"achievement\">Achievement unlocked! You " + a.description + ".</div>");
+    sendAllBut("<div class=\"achievement\">" + p.name + " got an achievement! " + p.name + " " + a.description + ".</div>", p);
   }
   
   private String getIntroduction() {
