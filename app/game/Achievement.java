@@ -7,11 +7,8 @@ public enum Achievement {
   LEVEL_10("reached level 10"),
   DIE("died"),
   FINISH("finished the game"),
-  FINISH_IN_10_MINUTES("finished the game in less than 10 minutes");
-  
-  /*
+  FINISH_IN_10_MINUTES("finished the game in less than 10 minutes"),
   RICKROLL("got Rickrolled");
-  */
   
   public final String description;
   

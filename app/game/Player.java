@@ -1,7 +1,7 @@
 package game;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import actors.Connection;
 import akka.actor.ActorRef;
@@ -14,7 +14,7 @@ public class Player extends Character {
   long exp;
   boolean killedKerrigan;
   boolean caughtClaptrap;
-  Set<Achievement> achievements;
+  List<Achievement> achievements;
   long startTimestamp;
   
   public Player(ActorRef connection, Room room) {
@@ -26,7 +26,7 @@ public class Player extends Character {
     hpMax = hp;
     hpRegen = 1;
     level = 1;
-    achievements = new HashSet<>();
+    achievements = new ArrayList<>();
     startTimestamp = System.currentTimeMillis();
   }
 

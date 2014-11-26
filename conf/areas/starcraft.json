@@ -75,7 +75,7 @@
     {
       "id": 312,
       "title": "A Random Room",
-      "description": "It's not really clear what this room is used for. In the corner something is scribbled on the wall: goo.gl/RFlt2A",
+      "description": "It's not really clear what this room is used for. In the corner something is scribbled on the wall: <a href=\"http://goo.gl/RFlt2A\" target=\"_blank\" onclick=\"window.click(this)\">never!</a>",
       "exits": [0, 0, 0, 304, 0, 0]
     }
   ],

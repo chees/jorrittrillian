@@ -66,3 +66,7 @@ input.closest('form').on('submit', function(e) {
 function htmlEncode(value) {
   return $('<div/>').text(value).html();
 }
+
+function click(link) {
+  ws.send('click ' + link.href);
+}

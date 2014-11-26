@@ -149,6 +149,8 @@ public class Game extends UntypedActor {
       }
     } else if ("down".startsWith(words[0])) {
       move(p, "down", 5);
+    } else if ("click".startsWith(words[0]) && words.length == 2 && "http://goo.gl/RFlt2A".equals(words[1])) {
+      awardAchievement(Achievement.RICKROLL, p);
     } else if ("east".startsWith(words[0])) {
       move(p, "east", 1);
     } else if ("grab".startsWith(words[0])) {
@@ -285,14 +287,7 @@ public class Game extends UntypedActor {
         else if (target.staredAt == 4) {
           sendRoom(target.name + " says: Fine, you win! meow<br>" + target.name + " walks away.", p.room);
           p.room.mobs.remove(target);
-          sendRoomBut(p.name + " disappears.", p.room, p);
-          p.room.players.remove(p);
-          p.room = rooms.get(501);
-          p.room.players.add(p);
-          handleCommand("look", p);
-          awardAchievement(Achievement.FINISH, p);
-          if (System.currentTimeMillis() - p.startTimestamp < 1000 * 60 * 10)
-            awardAchievement(Achievement.FINISH_IN_10_MINUTES, p);
+          finishGame(p);
         }
       }
     } else if ("up".startsWith(words[0])) {
@@ -478,6 +473,24 @@ public class Game extends UntypedActor {
         "The floor suddenly opens up and you fall through a big hole.<br>" +
         "You pass out...<br><br>" +
         "When you wake up you look around:";
+  }
+  
+  private void finishGame(Player p) {
+    sendRoomBut(p.name + " disappears.", p.room, p);
+    p.room.players.remove(p);
+    p.room = rooms.get(501);
+    p.room.players.add(p);
+    handleCommand("look", p);
+    awardAchievement(Achievement.FINISH, p);
+    if (System.currentTimeMillis() - p.startTimestamp < 1000 * 60 * 10)
+      awardAchievement(Achievement.FINISH_IN_10_MINUTES, p);
+    
+    String output = "You unlocked " + p.achievements.size() + " out of " + Achievement.values().length + " achievements:<ul>";
+    for (Achievement a : p.achievements) {
+      output += "<li>You " + a.description + ".";
+    }
+    output += "</ul>";
+    p.send(output);
   }
   
   public static class NewConnectionMsg {}
