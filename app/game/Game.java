@@ -466,6 +466,7 @@ public class Game extends UntypedActor {
     p.achievements.add(a);
     p.send("<div class=\"achievement\">Achievement unlocked! You " + a.description + ".</div>");
     sendAllBut("<div class=\"achievement\">" + p.name + " got an achievement! " + p.name + " " + a.description + ".</div>", p);
+    Logger.info(p.name + " got achievement: " + a.description);
   }
   
   private String getIntroduction() {
