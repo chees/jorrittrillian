@@ -30,7 +30,6 @@ public class Game extends UntypedActor {
     //mobs = loader.getMobs();
     for (Area a : areas) a.respawn();
     
-    
     getContext().system().scheduler().scheduleOnce(
         Duration.create(250, TimeUnit.MILLISECONDS),
         getSelf(), new Tick(), getContext().dispatcher(), null);
@@ -86,6 +85,7 @@ public class Game extends UntypedActor {
     if (p.target.hp <= 0) {
       if (((Mob)p.target).id == 302) {
         sendRoom("Kerrigan says: You are such a lucker.", p.room);
+        awardAchievement(Achievement.KERRIGAN, p);
         p.killedKerrigan = true;
       }
       p.send("You killed " + p.target.name + "!");
@@ -96,10 +96,10 @@ public class Game extends UntypedActor {
       }
       p.room.mobs.remove(p.target);
       p.state = State.STANDING;
-      p.target = null;
-      p.addExp(50 + (int)(Math.random() * 100));
+      p.addExp(75 + (int)(1.5 * Math.random() * p.target.hpMax));
       if (p.level >= 10)
         awardAchievement(Achievement.LEVEL_10, p);
+      p.target = null;
     } else {
       p.hp--;
       if (p.hp <= 0) {
@@ -158,6 +158,7 @@ public class Game extends UntypedActor {
         p.send("You grab Claptrap! You take a thingy from him before letting him go again.");
         sendRoomBut(p.name + " grabs Claptrap! " + p.name + " takes a thingy from him before letting him go again.", p.room, p);
         p.caughtClaptrap = true;
+        awardAchievement(Achievement.CLAPTRAP, p);
       } else {
         p.send("Grab what?");
       }
@@ -338,13 +339,13 @@ public class Game extends UntypedActor {
         sendRoom("Raynor says: Get out of here kid! Get a bit stronger first.", p.room);
         handleCommand("west", p);
       } else {
-        sendRoom("Oh hi, I'm having some trouble with my wife. She's in there somewhere complaining about her hair. Maybe you could talk to her?", p.room);
+        sendRoom("Raynor says: Oh hi, I'm having some trouble with my wife. She's in there somewhere complaining about her hair. Maybe you could talk to her?", p.room);
       }
     }
     else if (p.room.id == 309) {
       Mob kerrigan = p.room.getMob("kerrigan");
       if (kerrigan != null && kerrigan.state == State.STANDING) {
-        sendRoom("Noooo, my hair looks terrible! Nobody can see me like this! DIE!!", p.room);
+        sendRoom("Kerrigan says: Noooo, my hair looks terrible! Nobody can see me like this! DIE!!", p.room);
         p.send("Kerrigan attacks you!");
         sendRoomBut("Kerrigan attacks " + p.name + "!", p.room, p);
         p.state = State.FIGHTING;
@@ -467,7 +468,7 @@ public class Game extends UntypedActor {
   }
   
   private String getIntroduction() {
-    return "<br>Congratulations on your marriage! This is a little game that you can play together. Depending on how well you do there might even be real loot at the end.<br>" +
+    return "<br>Congratulations on your marriage! This is a little game that you can play together (OMG I love multiplayer games). Depending on how well you do there might even be real loot at the end.<br>" +
         "Btw, I only tested it in Chrome, so it might not work in other browsers =)<br>" +
         "Remember that you can type <em>help</em> at any time to to get some help. Have fun!<br><br>" +
         "The floor suddenly opens up and you fall through a big hole.<br>" +
@@ -487,10 +488,11 @@ public class Game extends UntypedActor {
     
     String output = "You unlocked " + p.achievements.size() + " out of " + Achievement.values().length + " achievements:<ul>";
     for (Achievement a : p.achievements) {
-      output += "<li>You " + a.description + ".";
+      output += "<li>You " + a.description + " (&euro; 5).";
     }
     output += "</ul>";
-    output += "Send a screenshot of this to Christiaan for your reward. (Yes really, I didn't have time to implement a decent highscore system :P)";
+    output += "Congratulations " + p.name + "! You won &euro; " + p.achievements.size() * 5 + "<br>";
+    output += "Send screenshots of your highest scores to Christiaan for your reward. (Yes really, I didn't have time to implement a decent highscore system :P)";
     p.send(output);
   }
   

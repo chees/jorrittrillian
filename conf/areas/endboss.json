@@ -9,7 +9,7 @@
     {
       "id": 501,
       "title": "Ultimate Victory",
-      "description": "Awesome, you won! You are the ultimate adventurer. I hope you'll have a happy marriage :)",
+      "description": "Awesome, you won! You are the ultimate adventurer. I hope you'll have a happy marriage :)<br>There's a banana bed standing here.",
       "exits": [0, 0, 0, 0, 0, 0]
     }
   ],
