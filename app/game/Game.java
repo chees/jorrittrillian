@@ -444,6 +444,7 @@ public class Game extends UntypedActor {
   }
   
   private void sendAllButSys(String msg, Player excluded) {
+    Logger.info(msg);
     sendAllBut("<span class=\"sys\">" + msg + "</span>", excluded);
   }
   
@@ -494,6 +495,7 @@ public class Game extends UntypedActor {
     output += "Congratulations " + p.name + "! You won &euro; " + p.achievements.size() * 5 + "<br>";
     output += "Send screenshots of your highest scores to Christiaan for your reward. (Yes really, I didn't have time to implement a decent highscore system :P)";
     p.send(output);
+    Logger.info(p.name + " finished with " + p.achievements.size() + " achievements");
   }
   
   public static class NewConnectionMsg {}

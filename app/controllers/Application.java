@@ -1,5 +1,6 @@
 package controllers;
 
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
@@ -13,6 +14,7 @@ public class Application extends Controller {
   }
 
   public static WebSocket<String> websocket() {
+    Logger.info("New websocket: " + request().remoteAddress());
     return WebSocket.withActor(Connection::props);
   }
 
